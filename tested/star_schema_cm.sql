@@ -321,7 +321,7 @@ BEGIN
         record NVARCHAR(MAX) NULL,
         case_id INT NOT NULL,
         author NVARCHAR(100) NULL,
-        record_type NVARCHAR(50) NULL, -- 'Record' or 'Meeting Note'
+        record_type NVARCHAR(50) NULL,
         CONSTRAINT FK_fact_records_fact_cases
             FOREIGN KEY (case_id) REFERENCES dbo.fact_cases(id)
     );
