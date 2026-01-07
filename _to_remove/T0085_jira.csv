@@ -1,0 +1,203 @@
+Summary,Issue key,Issue id,Issue Type,Status,Project key,Project name,Project type,Project lead,Project lead id,Project description,Priority,Resolution,Assignee,Assignee Id,Reporter,Reporter Id,Creator,Creator Id,Created,Updated,Last Viewed,Resolved,Due date,Votes,Description,Environment,Watchers,Watchers,Watchers Id,Watchers Id,Original estimate,Remaining Estimate,Time Spent,Work Ratio,Σ Original Estimate,Σ Remaining Estimate,Σ Time Spent,Security Level,Attachment,Attachment,Custom field (Actual end),Custom field (Actual start),Custom field (Approvals),Custom field (Category),Custom field (Change reason),Custom field (Change risk),Custom field (Change type),Custom field (Date Completed),Custom field (Development),Custom field (Epic Color),Custom field (Epic Name),Custom field (Epic Status),Custom field (Focus Areas),Custom field (Goals),Custom field (Impact),Custom field (Issue color),Custom field (Locked forms),Custom field (Open forms),Custom field (Project overview key),Custom field (Project overview status),Custom field (Rank),Custom field (Request Type),Custom field (Request participants),Satisfaction rating,Custom field (Satisfaction date),Custom field (Sentiment),Sprint,Custom field (Start date),Custom field (Story Points),Custom field (Story point estimate),Custom field (Submitted forms),Custom field (Target end),Custom field (Target start),Custom field (Team),Custom field (Total forms),Custom field (Vulnerability),Custom field (Work category),Custom field ([CHART] Date of First Response),Custom field ([CHART] Time in Status),Comment,Comment,Comment,Parent,Parent key,Parent summary,Status Category,Status Category Changed
+Review proposed PR for alert ingestion,T0085-31,20017,Story,Done,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,Done,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,24/Nov/25 11:03 AM,07/Jan/26 8:06 AM,07/Jan/26 10:34 AM,16/Dec/25 9:21 AM,,0,,,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@3ac2c7e1,,,,,,{},,,,,,,,,,,,0|i00jkr:i,,,,,,TCM Sprint 1,,,,,,,,,,,,3_*:*_1_*:*_0_*|*_10127_*:*_1_*:*_50024,,,,19845,T0085-2,Data Model & Case Management Database,Done,16/Dec/25 9:21 AM
+Post-deployment support,T0085-30,19873,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:58 PM,07/Jan/26 10:25 AM,,,30/Jan/26 12:00 AM,0,"* As a Product Owner
+* I want a short period of focused support after go-live (4 weeks)
+* So that any early issues are quickly resolved.
+* Acceptance criteria
+** 28-day post-deployment support window defined (matching work package).
+** Process for raising/triaging production issues agreed.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@52ad7241,,,,,,{},,,,,,,,,,,,0|i00jlb:i,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19848,T0085-5,UAT & Handover,To Do,19/Nov/25 9:58 PM
+Deployment pipeline updates,T0085-29,19872,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:57 PM,07/Jan/26 10:25 AM,,,09/Jan/26 12:00 AM,0,"* As a platform engineer
+* I want CI/CD updated for the new module
+* So that deployments to dev and prod are consistent.
+* Acceptance criteria
+** Build includes Case Management UI and API services.
+** DB migrations run as part of deployment.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@1dd7b1ce,,,,,,{},,,,,,,,,,,,0|i00jla:,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19848,T0085-5,UAT & Handover,To Do,19/Nov/25 9:57 PM
+Regression testing of existing FRP functionality,T0085-28,19871,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:56 PM,07/Jan/26 10:25 AM,,,09/Jan/26 12:00 AM,0,"* As a system owner
+* I want assurance that existing features still work
+* So that introducing Case Management does not break the portal.
+* Acceptance criteria
+** Regression pack identified for critical FRP flows.
+** Pack executed in staging before release.
+** Any regressions raised and fixed before go-live.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@2ba36dd4,,,,,,{},,,,,,,,,,,,0|i00jl8:i,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19848,T0085-5,UAT & Handover,To Do,19/Nov/25 9:56 PM
+UAT with Porterbrook engineers,T0085-27,19870,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:55 PM,07/Jan/26 10:25 AM,,,16/Jan/26 12:00 AM,0,"* As a Product Owner
+* I want structured UAT sessions
+* So that the feature is validated by real users.
+* Acceptance criteria
+** UAT plan prepared covering IDs 1–4 from work package.
+** Feedback captured, triaged into defects vs change requests.
+** Up to 2 iterations of agreed in-scope changes delivered.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@507c3ed3,,,,,,{},,,,,,,,,,,,0|i00jl8:9,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19848,T0085-5,UAT & Handover,To Do,19/Nov/25 9:55 PM
+Automated tests for APIs & UI,T0085-26,19869,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:54 PM,07/Jan/26 10:25 AM,,,09/Jan/26 12:00 AM,0,"* As a dev team
+* We want automated tests
+* So that we can catch regressions early.
+* Acceptance criteria
+** Unit tests for services.
+** API tests for main endpoints (incl. permissions).
+** UI tests for core flows: filter, create, edit, close case.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@f3c376c,,,,,,{},,,,,,,,,,,,0|i00jl8:,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19848,T0085-5,UAT & Handover,To Do,19/Nov/25 9:54 PM
+"Implement “Boost Pressure Tracker”, “Air Leaks”, “Coolant Temperature” panels",T0085-24,19867,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:45 PM,07/Jan/26 10:25 AM,,,09/Jan/26 12:00 AM,0,"* As a reliability engineer
+* I want key diagnostic charts for the selected filters
+* So that I can quickly see patterns linked to cases.
+* Acceptance criteria
+** Three panels implemented per mock-up (even if initially simple charts).
+** Panels query Databricks for aggregated metrics for filtered fleet + subsystem.
+** Empty states when data is unavailable.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@54617fdf,,,,,,{},,,,,,,,,,,,0|i00jkv:03v,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,To Do,19/Nov/25 9:45 PM
+Visual state & accessibility for train filter (if budget allows),T0085-23,19866,Story,ON HOLD,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:44 PM,07/Jan/26 8:07 AM,07/Jan/26 8:06 AM,,12/Dec/25 12:00 AM,0,"{color:#ff5630}THIS CARD SHOULD ONLY BE ACTIONED IF THERE IS BUDGET REMAINING{color}
+
+* As a user with accessibility needs
+* I want the train filter to be keyboard-navigable and understandable
+* So that I can use it without a mouse and with assistive tech.
+* Acceptance criteria
+** Focus states, ARIA labels and tooltips for each subsystem.
+** Keyboard navigation cycles hotspots.
+** Works alongside traditional dropdown for subsystem so the feature is not “image-only”.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@6fe77a58,,,,,,{},,,,,,,,,,,,0|i00jl5:,,,,,,,,,,,,,,,,,,,,,,19846,T0085-3,Graphical Drilldown,In Progress,07/Jan/26 8:07 AM
+Wire train hotspots to filters,T0085-22,19865,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:40 PM,07/Jan/26 8:48 AM,07/Jan/26 8:47 AM,,12/Dec/25 12:00 AM,0,"* As a user
+* I want clicking a subsystem to filter the grid and dashboards
+* So that I see only cases relevant to that subsystem.
+* Acceptance criteria
+** Clicking a hotspot sets the subsystem filter and UI shows which subsystem is active.
+** Deselection behaviour defined (e.g. click again to clear).
+** Integration tests verify correct query params when different subsystems selected.
+
+!image-20260107-084801.png|width=694,alt=""image-20260107-084801.png""!",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,07/Jan/26 8:48 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-084801.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11663,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@b1ab2cb,,,,,,{},,,,,,,,,,,,0|i00jkr:,,,,,,TCM Sprint 1,,,,,,,,,,,,,,,,19846,T0085-3,Graphical Drilldown,In Progress,07/Jan/26 8:06 AM
+Design clickable train schematic,T0085-21,19864,Story,Done,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,Done,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:38 PM,07/Jan/26 8:47 AM,07/Jan/26 8:46 AM,12/Dec/25 9:24 AM,12/Dec/25 12:00 AM,0,"* As a user
+* I want to click on parts of a train image
+* So that I can filter cases by subsystem visually.
+* Acceptance criteria
+** SVG (or vector) train image created with defined hotspot regions (e.g. engine, HVAC, doors, UAT, brakes, bogies) based on concept design.
+** Subsystem taxonomy agreed and mapped to each hotspot.
+** Responsive design tested on common resolutions.
+
+!image-20260107-084702.png|width=694,alt=""image-20260107-084702.png""!",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,07/Jan/26 8:47 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-084702.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11662,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@5b5da3e5,,,,,,{},,,,,,,,,,,,0|i00jkq:,,,,,,TCM Sprint 1,,,,,,,,,,,,10127_*:*_1_*:*_1943118977_*|*_10126_*:*_1_*:*_0,,,,19846,T0085-3,Graphical Drilldown,Done,12/Dec/25 9:24 AM
+Create case from scratch,T0085-20,19863,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:37 PM,07/Jan/26 9:03 AM,07/Jan/26 9:03 AM,,09/Jan/26 12:00 AM,0,"* As a user
+* I want to create a new case even when there’s no alert
+* So that I can log ad-hoc investigations.
+* Acceptance criteria
+** “Create case” button on page.
+** Form includes mandatory fields: title, vehicle/unit, subsystem, description; optional: alert/WO/incident links.
+** On success, user is taken to the new case detail.
+
+!Screenshot 2026-01-07 090128-20260107-090129.png|width=312,alt=""Screenshot 2026-01-07 090128-20260107-090129.png""!",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,07/Jan/26 9:03 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;Screenshot 2026-01-07 090128-20260107-090129.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11671,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@58fd575,,,,,,{},,,,,,,,,,,,0|i00jks:zi,,,,,,TCM Sprint 1,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,In Progress,05/Jan/26 6:49 PM
+Case detail view + edit,T0085-19,19862,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:36 PM,07/Jan/26 9:03 AM,07/Jan/26 9:00 AM,,09/Jan/26 12:00 AM,0,"* As a user
+* I want to view a full case record and update it
+* So that I can manage investigations.
+* Acceptance criteria
+** Detail view shows: core metadata, linked alerts/WOs/incidents, signal panels, notes, documents.
+** Edit mode with form validation.
+** Status change (e.g. Open → In Progress → Completed) with confirmation.
+
+!image-20260107-090318.png|width=688,alt=""image-20260107-090318.png""!",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,07/Jan/26 9:03 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-090318.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11670,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@660a49b,,,,,,{},,,,,,,,,,,,0|i00jks:z,,,,,,TCM Sprint 1,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,In Progress,19/Dec/25 3:05 PM
+Cases grid with drill-down,T0085-18,19861,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:35 PM,07/Jan/26 9:00 AM,07/Jan/26 8:59 AM,,09/Jan/26 12:00 AM,0,"* As a user
+* I want a table of cases with key attributes and drill-down
+* So that I can review and update cases efficiently.
+* Acceptance criteria
+** Grid displays columns similar to concept (ID, fleet/unit/vehicle, title, description, status, meeting notes/updates, dates, subsystem).
+** Pagination and sorting by key columns.
+** Clicking a row opens a case detail drawer.
+** Supports inline search by case ID/title.
+
+!image-20260107-090008.png|width=632,alt=""image-20260107-090008.png""!",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,07/Jan/26 9:00 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-090008.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11669,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@398457ab,,,,,,{},,,,,,,,,,,,0|i00jks:y,,,,,,TCM Sprint 1,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,In Progress,19/Dec/25 3:05 PM
+Implement summary counters,T0085-17,19860,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:34 PM,07/Jan/26 8:39 AM,07/Jan/26 8:36 AM,,09/Jan/26 12:00 AM,0,"* As a user
+* I want to see counts of total, new and completed reports
+* So that I understand workload at a glance.
+* Acceptance criteria
+** KPI tiles display counts consistent with grid filters.
+** “New” and “Completed” defined and documented (e.g. last 7 days, status enums).
+** Loading and error states handled.
+
+!image-20260107-083932.png|width=694,alt=""image-20260107-083932.png""!",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,07/Jan/26 8:39 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-083932.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11661,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@1e41b91d,,,,,,{},,,,,,,,,,,,0|i00jks:x,,,,,,TCM Sprint 1,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,In Progress,19/Dec/25 3:05 PM
+Implement filter bar,T0085-16,19859,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:33 PM,07/Jan/26 8:59 AM,07/Jan/26 8:57 AM,,19/Dec/25 12:00 AM,0,"* As a user
+* I want to filter cases by TOC, class, depot, unit, vehicle, period and date
+* So that I can focus on relevant cases.
+* Acceptance criteria
+** Filter controls for: TOC, Class, Depot, Unit, Vehicle, Period, Date range (per mock-up).
+** Changing filters refreshes counters, train image highlighting, dashboards and grid.
+** Filters URL-encoded so views can be bookmarked/shared.
+
+!image-20260107-085757.png|width=694,alt=""image-20260107-085757.png""!",,Steven Das,Tristan Gerhold,712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba,5fbff729facfd60076fd4484,,,,,,,,,07/Jan/26 8:58 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-085757.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11667,07/Jan/26 8:59 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-085842.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11668,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@5a9c5cbe,,,,,,{},,,,,,,,,,,,0|i00jks:v,,,,,,TCM Sprint 1,,,,,,,,,,,2026-01-07 08:59:13.529,,"07/Jan/26 8:59 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;[NOTE] Currently, the implemented filters are TOC, Class, Depot and Unit. Vehicle and Period/Date are missing.
+
+!image-20260107-085842.png|width=602,alt=""image-20260107-085842.png""!",,,19847,T0085-4,Case Management Report,In Progress,19/Dec/25 3:05 PM
+Implement Case Management page shell,T0085-15,19858,Story,Done,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,Done,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:32 PM,19/Dec/25 3:05 PM,,19/Dec/25 3:05 PM,19/Dec/25 12:00 AM,0,"* As a user
+* I want a Case Management option in the portal nav
+* So that I can access the feature from the existing FRP.
+* Acceptance criteria
+** New menu item “Case Management” (or agreed label) in left nav.
+** Page is routed within existing React app and respects auth/permissions.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@d8f0ac,,,,,,{},,,,,,,,,,,,0|i00jks:r,,,,,,TCM Sprint 1,,,,,,,,,,,,10127_*:*_1_*:*_2568782950_*|*_10126_*:*_1_*:*_0,,,,19847,T0085-4,Case Management Report,Done,19/Dec/25 3:05 PM
+Integration with maintenance work orders & incidents,T0085-14,19857,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:27 PM,07/Jan/26 9:26 AM,07/Jan/26 8:56 AM,,19/Dec/25 12:00 AM,0,"* As a fleet engineer
+* I want to see related unplanned WOs and incidents in a case
+* So that I can understand past actions and performance.
+* Acceptance criteria
+** API service that, given vehicle and time window, returns related WOs and incidents.
+** Case stores references to associated WOs/incidents.
+** Exposed via API for the UI.
+
+!image-20260107-085712.png|width=323,alt=""image-20260107-085712.png""!",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,07/Jan/26 8:57 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-085712.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11666,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@5201ce44,,,,,,{},,,,,,,,,,,,0|i00jks:i,,,,,,TCM Sprint 1,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,In Progress,07/Jan/26 9:26 AM
+Integration with RCM alerts (auto-case pre-population),T0085-13,19856,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:26 PM,07/Jan/26 10:25 AM,,,19/Dec/25 12:00 AM,0,"* As a reliability engineer
+* I want RCM alerts to pre-fill case context
+* So that I don’t have to manually enter details.
+* Acceptance criteria
+** API that, given an alert ID, returns: timeseries snippet(s), vehicle, timestamps, relevant KPIs.
+** Case creation endpoint accepts an alert ID and stores linkage.
+** At least one alert type integrated end-to-end.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@72784804,,,,,,{},,,,,,,,,,,,0|i00jku:,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,To Do,19/Nov/25 9:26 PM
+"Attach signals, notes and documents to a case",T0085-12,19855,Story,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:25 PM,07/Jan/26 10:25 AM,,,19/Dec/25 12:00 AM,0,"* As a fleet engineer
+* I want to attach time-series signals, comments and documents to a case
+* So that everything relevant is stored together.
+* Acceptance criteria
+** Endpoints to create/read notes and documents for a case.
+** Signals endpoint that stores references to Databricks extracted time-series.
+** Max attachment size / supported types defined.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@4205405d,,,,,,{},,,,,,,,,,,,0|i00jkt:,,,,,,TCM Sprint 2,,,,,,,,,,,,,,,,19847,T0085-4,Case Management Report,To Do,19/Nov/25 9:25 PM
+CRUD API for cases,T0085-11,19854,Story,In Review,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:24 PM,07/Jan/26 8:56 AM,07/Jan/26 9:04 AM,,19/Dec/25 12:00 AM,0,"* As a frontend developer
+* I want REST endpoints to create, read, update and close cases
+* So that the UI can manage case lifecycle.
+* Acceptance criteria
+** Endpoints created e.g. {{GET /cases}}*,* {{GET /cases/{id}}}*,* {{POST /cases}}*,* {{PUT /cases/{id}}}*,* {{PATCH /cases/{id}/status}}*.*
+** Supports filters: TOC, class, depot, unit, vehicle, date range, status, subsystem.
+** Validation rules enforced (required fields, max lengths, valid statuses).
+** API documentation (OpenAPI/Swagger) updated.",,Steven Das,Tristan Gerhold,712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba,5fbff729facfd60076fd4484,,,,,,,,,07/Jan/26 8:53 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;image-20260107-085329.png;https://triggersoftware.atlassian.net/rest/api/3/attachment/content/11665,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@733e724f,,,,,,{},,,,,,,,,,,,0|i00jks:,,,,,,TCM Sprint 1,,,,,,,,,,,2026-01-07 08:53:14.301,,"07/Jan/26 8:53 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;[NOTE] The implemented endpoints don't quite match the request methods defined in this card
+
+!image-20260107-085329.png|width=634,alt=""image-20260107-085329.png""!",07/Jan/26 8:56 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;[NOTE] These endpoints are currently utilising mock data and will need to be repointed to query the SQL DB tables,,19847,T0085-4,Case Management Report,In Progress,16/Dec/25 9:21 AM
+Define mirroring from Databricks entities to cases DB,T0085-10,19853,Story,In Review,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,Steven Das,712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:15 PM,07/Jan/26 8:03 AM,07/Jan/26 9:19 AM,,05/Dec/25 12:00 AM,0,"* As a case investigator
+* I want each case to reference relevant alert context, WOs and incidents
+* So that I can see the full context.
+* Acceptance criteria
+** Data model includes stable IDs/keys
+** Mapping rules between FRP DB and warehouse documented (e.g. via vehicle ID, timestamp ranges, etc.).
+** Sample mappings tested for at least one fleet and tests prove functionality",,Steven Das,Tristan Gerhold,712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba,5fbff729facfd60076fd4484,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@aca80d5,,,,,,{},,,,,,,,,,,,0|i00jkm:i,,,,,,TCM Sprint 1,,,,,,,,,,,2026-01-07 08:01:20.417,,07/Jan/26 8:01 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;17/12/25 RakeHistory and UnifiedInterventions mirrored over to SQL DB,07/Jan/26 8:01 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;07/01/2026 Depot field added to RakeHistory (mirrored table only) and RCMCaseManagement table mirrored over to SQL DB,"07/Jan/26 8:02 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;+Remaining Tasks+
+
+* Core notebooks Dev → Main
+* Terraform the task to mirror RCMCaseManagement over to SQL DB",19845,T0085-2,Data Model & Case Management Database,In Progress,10/Dec/25 9:29 AM
+Implement case tables in FRP SQL Server,T0085-9,19852,Story,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,Steven Das,712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 9:05 PM,07/Jan/26 8:02 AM,07/Jan/26 8:43 AM,,05/Dec/25 12:00 AM,0,"* As a platform engineer
+* I want the new schema deployed -via migrations-
+* So that environments stay consistent.
+* Acceptance criteria
+** Migration scripts created and applied to dev DB.
+** Primary keys, FKs, indexes created.",,Steven Das,Tristan Gerhold,712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba,5fbff729facfd60076fd4484,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@63864729,,,,,,{},,,,,,,,,,,,0|i00jkn:,,,,,,TCM Sprint 1,,,,,,,,,,,2026-01-07 07:59:08.586,,"07/Jan/26 7:59 AM;712020:938e247f-27ba-4c56-aa72-d04f4aa4f9ba;+Remaining Tasks+
+
+* Write all CREATE TABLE statements for case tables
+* Write all stored procedures for case tables
+* Create notebook task to add to the ingest_rcm_case_management_job_000 to populate case tables",,,19845,T0085-2,Data Model & Case Management Database,In Progress,12/Dec/25 9:24 AM
+Design case management database schema,T0085-8,19851,Story,Done,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,Done,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 8:58 PM,19/Dec/25 3:03 PM,05/Jan/26 10:19 AM,19/Dec/25 3:03 PM,28/Nov/25 12:00 AM,0,"* As a data engineer
+* I want a normalised schema for cases and related data
+* So that case data is consistent, queryable and performant.
+* Acceptance criteria
+** Tables defined (e.g. {{Case}}*,* {{CaseSignal}}*,* {{CaseNote}}*,* {{CaseDocument}}*,* {{CaseLink}} to alerts/WOs/incidents, subsystem lookup).
+** Relationships clearly defined.
+** ERD/schema diagram produced and stored in Confluence.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@117454e,,,,,,{},,,,,,,,,,,,0|i00jkm:,,,,,,TCM Sprint 1,,,,,,,,,,,,3_*:*_1_*:*_0_*|*_10127_*:*_1_*:*_995878253,,,,19845,T0085-2,Data Model & Case Management Database,Done,19/Dec/25 3:03 PM
+Finalise UX for Case Management page,T0085-7,19850,Story,Done,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,Done,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 8:49 PM,07/Jan/26 8:05 AM,05/Jan/26 10:17 AM,16/Dec/25 9:20 AM,26/Nov/25 12:00 AM,0,"* As a fleet engineer
+* I want a clear, intuitive Case Management page
+* So that I can quickly see open cases, drill down and create new ones.
+* Acceptance criteria
+** Wireframes in Figma updated from the conceptual design (filters row, KPI tiles, train graphic, three signal panels, cases grid).
+** States defined: loading, empty, no permissions, error.
+** UX reviewed and signed off by Porterbrook.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@107e51b4,,,,,,{},,,,,,,,,,,,0|i00jkj:,,,,,,TCM Sprint 1,,,,,,,,,,,,10436_*:*_1_*:*_0_*|*_3_*:*_1_*:*_2158819508_*|*_10333_*:*_1_*:*_64790_*|*_10127_*:*_1_*:*_46333763,,,,19844,T0085-1,Discovery and Design,Done,16/Dec/25 9:20 AM
+Confirm functional scope of Case Management,T0085-6,19849,Story,Done,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,Done,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 8:45 PM,07/Jan/26 8:05 AM,05/Jan/26 10:46 AM,05/Dec/25 3:32 PM,21/Nov/25 12:00 AM,0,"* As a Product Owner
+* I want a shared understanding of core case workflows and data sources
+* So that the team can design a solution aligned with Porterbrook’s needs.
+* Acceptance criteria
+** Documented workflows for: create case, update, close, search/filter, export/print.
+** Data sources confirmed: Databricks tables (RCM alerts, sensor data, unplanned WOs, incidents) + existing FRP DB.
+** Tables to be mirrored to SQL DB.
+** Agreement on minimum viable feature set and “stretch” items (e.g. Teams digest, repeat-flagging) that can be extended for later use.",,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@3648994,,,,,,{},,,,,,,,,,,,0|i00jkh:,,,,,,TCM Sprint 1,19/Nov/25 12:00 AM,,,,,,,,,,,3_*:*_1_*:*_0_*|*_10127_*:*_1_*:*_46547426,"24/Nov/25 10:57 AM;5fbff729facfd60076fd4484;Porterbrook have asked for RCM signal viewing capability and understand this is a change request. THis should be proposed under the AssetBeats model as a freebie, or under a seperate VO at 5 days non-discounted effort.",,,19844,T0085-1,Discovery and Design,Done,05/Dec/25 3:32 PM
+UAT & Handover,T0085-5,19848,Epic,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 8:15 PM,20/Nov/25 11:57 AM,,,30/Jan/26 12:00 AM,0,,,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@26184030,,,,,,{},ghx-label-11,,To Do,,,,teal,,,,,0|i00jkf:,,,,,,,,,,,,,,,,,,,,,,,,,To Do,19/Nov/25 8:15 PM
+Case Management Report,T0085-4,19847,Epic,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 8:15 PM,20/Nov/25 11:57 AM,,,09/Jan/26 12:00 AM,0,,,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@bdc751f,,,,,,{},ghx-label-14,,To Do,,,,dark_orange,,,,,0|i00jk7:,,,,,,,,,,,,,,,,,,,,,,,,,To Do,19/Nov/25 8:15 PM
+Graphical Drilldown,T0085-3,19846,Epic,To Do,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 7:30 PM,20/Nov/25 11:57 AM,,,12/Dec/25 12:00 AM,0,,,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@595b6f0a,,,,,,{},ghx-label-3,,To Do,,,,yellow,,,,,0|i00jjz:,,,,,,,,,,,,,,,,,,,,,,,,,To Do,19/Nov/25 7:30 PM
+Data Model & Case Management Database,T0085-2,19845,Epic,In Progress,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 7:29 PM,07/Jan/26 8:07 AM,,,05/Dec/25 12:00 AM,0,,,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@6f591761,,,,,,{},ghx-label-3,,To Do,,,,yellow,,,,,0|i00jjr:,,,,,,,,,,,,,,,,,,,,,,,,,In Progress,07/Jan/26 8:07 AM
+Discovery and Design,T0085-1,19844,Epic,Done,T0085,T0085 - Case Management,software,Tristan Gerhold,5fbff729facfd60076fd4484,,Medium,Done,,,Tristan Gerhold,5fbff729facfd60076fd4484,Tristan Gerhold,5fbff729facfd60076fd4484,19/Nov/25 4:56 PM,05/Jan/26 10:17 AM,,05/Jan/26 10:17 AM,26/Nov/25 12:00 AM,0,,,Tristan Gerhold,,5fbff729facfd60076fd4484,,,,,,,,,,,,,,com.atlassian.servicedesk.plugins.approvals.internal.customfield.ApprovalsCFValue@1459589,,,,,,{},ghx-label-10,,To Do,,,,blue,,,,,0|i00jjj:,,,,,,,,,,,,,,,,,,3_*:*_1_*:*_0_*|*_10127_*:*_1_*:*_60268664,,,,,,,Done,05/Jan/26 10:17 AM

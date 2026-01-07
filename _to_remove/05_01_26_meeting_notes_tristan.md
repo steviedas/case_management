@@ -1,0 +1,3 @@
+- expectation is first case management release on Monday 12th Jan
+- ability to right-click the engine intervention page to edit an intervention rather than scrolling to the right of the table and clicking edit button must be added as a requirement (agreed previously)
+- request has been added to merge the 'Records' and 'Meeting Notes' into a single tab rather than 2 x tabs.

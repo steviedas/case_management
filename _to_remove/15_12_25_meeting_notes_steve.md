@@ -1,0 +1,19 @@
+- Currently for DMU's only (needs to be expandable to EMU's in the future)
+- Joe would like an easy way to filter by unit across a given fleet
+  - Suggested left and right arrows either side of the image to switch between units in the fleet
+- Highlighted systems - actual case vs suggested case (highlight suggested cases differently to be able to distinguish)
+- In PBI:
+  - [Page 1] Linked Intervention ID - each case can have multiple work orders associated
+  - [Page 1] The unit list on the left hand side of the page is used for quick unit filtering
+  - [Page 2] Tracking how turbo cleans affect the average boost pressure
+    - Currently, NTL engineers are using MS Forms to submit instances of turbo cleans
+    - The ambient air temperature graph is not used
+  - [Page 3] Attempting to catch engines running at high temperatures
+    - Done by looking at the cases of high coolant temperatures
+    - NTL engineers have had issues with logging into PBI Dashboard
+    - If a breach occurs three times in one day a stage 1 case is created.
+      - Subsequent repeat offences elevate the case to stage 2 and eventually stage 3 (where x is raised with Wabtec)
+- Perhaps we need a unified events view that encompasses Instrumentel data, our events, etc.
+- Average boost pressure over a week, update once per day.
+- Perhaps some statistics (median, mean, mode per day)
+- Joe is on leave 17th Dec -> 5th Jan. Working half day on 22nd Dec.

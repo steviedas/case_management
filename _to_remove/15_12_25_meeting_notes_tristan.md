@@ -1,0 +1,7 @@
+- Need to add extra status for "Proposed" cases which will be created automatically from queries
+- Some inputs are driven from TOC filling out MS Form. It is difficult and process is falling down at the moment (opportunity to solve this with the app)
+- Diagram to be used as dynamic scrolling across Units and then highlight based on accepted vs proposed cases against a sub-system on the vehicle
+- Case -> Work Orders is Many -> Many
+- Olivia to rebaseline schedule
+- Leave Unit filter in
+- Symptoms important to see proportion of cases against fleet
