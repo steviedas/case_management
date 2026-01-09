@@ -1,0 +1,57 @@
+ID,FEATURE,DESCRIPTION,PRIORITY,TEST STEPS,EXPECTED RESULT,STATUS,TESTED BY,TEST DATE,COMMENTS
+UAT-058,Case Detail View - Open and Close,As a user I can open and close the case detailed view modal,High,"1. Navigate to Case Management page
+2. Locate a case in the case table
+3. Click on the case row
+4. Review the header section (case ID, title, status, priority, unit, vehicle)
+5. Review the Description section
+6. Click on the area outside of the modal","Detailed view modal opens as an overlay. Modal displays case header with all information correct and matching the selected case. Description is displayed below the header with readable formatting. Tabs are displayed (Records, Work Orders, Alerts). Edit Case and Reject Case buttons are visible. Clicking outside the modal closes it and returns to the Case Management page with previously applied filters intact.",,,,
+UAT-059,Case Detail View - Tab Navigation,As a user I can navigate between tabs in the detailed view,High,"1. Open a case detailed view
+2. Observe which tab is active by default
+3. Click on the Work Orders tab
+4. Click on the Alerts tab
+5. Return to the Records tab","Records tab is active by default when opening the modal. Records content is displayed immediately. Each tab becomes active when clicked (highlighted/underlined). Tab content updates to show the relevant information. Navigation between tabs is smooth and content loads correctly.",,,,
+UAT-064,Records Tab - View Records,As a user I can see all records associated with a case,High,"1. Open a case detailed view
+2. Ensure Records tab is active
+3. Review the records table",Records table displays two columns: DATE and RECORD. All records associated with the case are displayed in chronological order. Dates and record text are clearly visible.,,,,
+UAT-065,Records Tab - Manage Records,"As a user I can add , edit and delete records",High,"1. Open a case detailed view
+2. Click Records tab
+3. Click ""Add New Record"" button
+4. Select a date and enter text in the Update field
+5. Click Save to create the record
+6. Click Cancel on another new record to verify cancellation
+7. Click Edit button on an existing record
+8. Modify the record text and save changes
+9. Click Delete button on a record
+10. Confirm deletion","Add New Record dialog opens with Date and Update fields. New records are created and saved successfully, appearing in chronological order. Cancel discards entered data without creating a record. Existing records can be edited and changes are saved. Records can be deleted and are permanently removed from the records table. Edit and Delete buttons are available on each record row.",,,,
+UAT-070,Work Orders Tab - View Work Orders,As a user I can see all work orders linked to a case,High,"1. Open a case detailed view
+2. Click Work Orders tab
+3. Review the work orders table","Work orders table displays all linked work orders with columns: ID, REPORT, ACTION, DATE, ROOT CODE, SYMPTOM, STATUS. All work order information is clearly visible and accurate.",,,,
+UAT-071,Work Orders Tab - Link and Unlink Work Orders,As a user I can link and unlink work orders to a case,High,"1. Open a case detailed view
+2. Click Work Orders tab
+3. Click on the ""Select a work order"" dropdown
+4. Select a work order from the dropdown list
+5. Click Add button
+6. Verify work order appears in the table
+7. Click unlink/remove option on a linked work order
+8. Confirm removal if prompted
+9. Open a case with no linked work orders and verify empty state","Dropdown opens and displays available work orders with scrollbar if needed. Selected work order is linked and appears in the table with all details (ID, REPORT, ACTION, DATE, ROOT CODE, SYMPTOM, STATUS). Dropdown resets after adding. Work orders can be unlinked and are removed from the table for this case. Empty state shows appropriate message when no work orders are linked.",,,,
+UAT-075,Alerts Tab - View Alerts with Priority,As a user I can see all alerts associated with a case with priority indicators,High,"1. Open a case detailed view
+2. Click Alerts tab
+3. Review the alerts displayed
+4. Review alert priority badges","All alerts linked to the case are displayed as individual cards. Each alert card shows priority badge (HIGH, MEDIUM, LOW), timestamp, alert title, and alert description. Priority badges are visually distinct with different colours or styling. Priority is easily identifiable at a glance.",,,,
+UAT-076,Alerts Tab - View Signal Trace,As a user I can view the signal trace visualization for an alert,High,"1. Open a case detailed view
+2. Click Alerts tab
+3. Locate alerts with View Trace buttons
+4. Click ""View trace"" button on an alert
+5. Review the signal trace visualization","Each alert card displays a ""View trace"" button. Button is clearly visible and clickable. Signal trace visualization is displayed showing a time-series graph. Graph displays signal values over time with time offset labels (e.g., -2m to +2m). Data points and trend line are clearly visible. Graph title shows the signal name and time window.",,,,
+UAT-079,Alerts Tab - Empty State,As a user I can see appropriate messaging when no alerts are linked,Medium,"1. Open a case with no linked alerts
+2. Click Alerts tab","Alerts section is empty or shows ""No alerts linked"" message. No alert cards are displayed.",,,,
+UAT-077,Case Detail View - Edit and Reject Case,As a user I can edit a case or reject a case using the action buttons,High,"1. Open a case detailed view with Status other than Rejected
+2. Click the ""Edit Case"" button
+3. Verify edit functionality
+4. Return to case detail view
+5. Click the ""Reject Case"" button
+6. Provide rejection reason if prompted
+7. Confirm rejection
+8. Open a case with Status = Rejected
+9. Observe the Reject Case button state","Edit Case dialog opens allowing modification of case details (title, unit, vehicle, system, status, priority, description) with current information pre-populated. Reject Case button successfully updates case status to Rejected and saves rejection reason if provided. Modal may close or update to reflect new status. Case appears as Rejected in the case table. For already rejected cases, Reject Case button is disabled, greyed out, or not displayed.",,,,

@@ -1,0 +1,52 @@
+ID,FEATURE,DESCRIPTION,PRIORITY,TEST STEPS,EXPECTED RESULT,STATUS,TESTED BY,TEST DATE,COMMENTS
+UAT-001,Filters,As a user I can see the default filter state when the page loads,High,"1. Navigate to Case Management page
+2. Observe filter dropdowns","All four filters (TOC, Class, Depot, Unit) show ""All"" by default. All cases are displayed in the table.",,,,
+UAT-002,Filters - TOC,As a user I can filter cases by TOC,High,"1. Click TOC dropdown
+2. Select a specific TOC (e.g., ""GWR"")
+3. Click Apply",Only cases for selected TOC are displayed. Summary counters update to reflect filtered cases. Train diagram updates if applicable.,,,,
+UAT-003,Filters - Class,As a user I can filter cases by Class,High,"1. Click Class dropdown
+2. Select a specific Class (e.g., ""Class 165"")
+3. Click Apply",Only cases for selected Class are displayed. Summary counters and train diagram update accordingly.,,,,
+UAT-004,Filters - Depot,As a user I can filter cases by Depot,High,"1. Click Depot dropdown
+2. Select a specific Depot
+3. Click Apply",Only cases for selected Depot are displayed. Summary counters update.,,,,
+UAT-005,Filters - Unit,As a user I can filter cases by Unit,High,"1. Click Unit dropdown
+2. Select a specific Unit (e.g., ""150208"")
+3. Click Apply",Only cases for selected Unit are displayed. Summary counters update. Train diagram shows only the selected unit.,,,,
+UAT-006,Filters - Multiple,As a user I can filter cases using multiple criteria with cascading dropdowns,High,"1. Select TOC = ""XCT""
+2. Observe Class, Depot, and Unit dropdowns now show only options available for XCT
+3. Select a Class from the filtered options
+4. Select a Depot from the filtered options
+5. Click Apply",Only cases matching ALL selected criteria are displayed. Dropdowns cascade to show only relevant options based on previous selections. Counters update accordingly.,,,,
+UAT-007,Filters - Apply Button,As a user I can apply filters using the Apply button,High,"1. Select any filter value
+2. DO NOT click Apply
+3. Observe case list (should not change)
+4. Click Apply
+5. Observe case list updates",Filter is not applied until Apply button is clicked. Cases update only after Apply is clicked.,,,,
+UAT-008,Filters - Clear Button,As a user I can clear all filters using the Clear button,High,"1. Select values in multiple filters
+2. Click Apply
+3. Click Clear button","All filters reset to ""All"". All cases are displayed again. Summary counters show totals for all cases.",,,,
+UAT-009,Filters - No Results,As a user I can see appropriate messaging when filters return no results,Medium,"1. Select filter combination that has no matching cases
+2. Click Apply","Case table shows ""No cases found"" or empty state. Summary counters show 0 for all categories. Train diagram shows no units or appropriate empty state.",,,,
+UAT-010,Filters - Summary Counters,As a user I can see summary counters update when filters are applied,High,"1. Note initial counter values (Total, New, Completed, Monitor, Rejected)
+2. Apply any filter
+3. Compare counter values","Counters show counts only for filtered cases (e.g., if 2 rejected cases are visible after filter, Rejected counter shows 2).",,,,
+UAT-011,Filters - Train Diagram,As a user I can see the train diagram update when filtering by Unit,Medium,"1. Select specific Unit from Unit filter
+2. Click Apply",Counters show counts only for the selected Unit. The train diagram is also updated to the respective image. The cases shown are specfic to the selected Unit.,,,,
+UAT-012,Filters - Cascading,As a user I can see filters cascade based on my selections,Medium,"1. Select TOC
+2. Open Class dropdown",Class dropdown shows only classes relevant to selected TOC.,,,,
+UAT-013,Filters - Persistence,As a user I can see my filter selections persist during my session,Low,"1. Apply specific filters
+2. Click on a case to view details
+3. Return to case list page",Previously applied filters remain selected. Case list shows filtered results.,,,,
+UAT-014,Filters - Clear Individual,As a user I can change individual filters back to All while keeping other filters active,Medium,"1. Select TOC, Class, and Depot filters
+2. Click Apply
+3. Change TOC back to ""All""
+4. Click Apply",Cases now filtered only by Class and Depot. TOC filter is effectively removed.,,,,
+UAT-015,Filters - Case Table Columns,As a user I can see all required columns in filtered case results,High,"1. Apply any filter
+2. Review case table","Filtered cases display all columns: ID, Unit, Vehicle, System, Status, Priority, Title, Date.",,,,
+UAT-016,Filters - Pagination,As a user I can navigate through paginated filtered results,Medium,"1. Apply filter that returns more than 100 cases
+2. Check pagination at bottom of table","Pagination shows correct page count for filtered results (e.g., ""1-4 of 150""). Navigation works correctly.",,,,
+UAT-018,Filters - Dropdown Population,As a user I can see all available filter options in the dropdowns,High,"1. Click TOC dropdown
+2. Click Class dropdown
+3. Click Depot dropdown
+4. Click Unit dropdown","All dropdowns show ""All"" option plus all available values from database (TOCs, Classes, Depots, Units).",,,,

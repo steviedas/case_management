@@ -1,0 +1,254 @@
+ID,FEATURE,DESCRIPTION,PRIORITY,TEST STEPS,EXPECTED RESULT,STATUS,TESTED BY,TEST DATE,COMMENTS
+UAT-001,Filters,As a user I can see the default filter state when the page loads,High,"1. Navigate to Case Management page
+2. Observe filter dropdowns","All four filters (TOC, Class, Depot, Unit) show ""All"" by default. All cases are displayed in the table.",,,,
+UAT-002,Filters - TOC,As a user I can filter cases by TOC,High,"1. Click TOC dropdown
+2. Select a specific TOC (e.g., ""GWR"")
+3. Click Apply",Only cases for selected TOC are displayed. Summary counters update to reflect filtered cases. Train diagram updates if applicable.,,,,
+UAT-003,Filters - Class,As a user I can filter cases by Class,High,"1. Click Class dropdown
+2. Select a specific Class (e.g., ""Class 165"")
+3. Click Apply",Only cases for selected Class are displayed. Summary counters and train diagram update accordingly.,,,,
+UAT-004,Filters - Depot,As a user I can filter cases by Depot,High,"1. Click Depot dropdown
+2. Select a specific Depot
+3. Click Apply",Only cases for selected Depot are displayed. Summary counters update.,,,,
+UAT-005,Filters - Unit,As a user I can filter cases by Unit,High,"1. Click Unit dropdown
+2. Select a specific Unit (e.g., ""150208"")
+3. Click Apply",Only cases for selected Unit are displayed. Summary counters update. Train diagram shows only the selected unit.,,,,
+UAT-006,Filters - Multiple,As a user I can filter cases using multiple criteria with cascading dropdowns,High,"1. Select TOC = ""XCT""
+2. Observe Class, Depot, and Unit dropdowns now show only options available for XCT
+3. Select a Class from the filtered options
+4. Select a Depot from the filtered options
+5. Click Apply",Only cases matching ALL selected criteria are displayed. Dropdowns cascade to show only relevant options based on previous selections. Counters update accordingly.,,,,
+UAT-007,Filters - Apply Button,As a user I can apply filters using the Apply button,High,"1. Select any filter value
+2. DO NOT click Apply
+3. Observe case list (should not change)
+4. Click Apply
+5. Observe case list updates",Filter is not applied until Apply button is clicked. Cases update only after Apply is clicked.,,,,
+UAT-008,Filters - Clear Button,As a user I can clear all filters using the Clear button,High,"1. Select values in multiple filters
+2. Click Apply
+3. Click Clear button","All filters reset to ""All"". All cases are displayed again. Summary counters show totals for all cases.",,,,
+UAT-009,Filters - No Results,As a user I can see appropriate messaging when filters return no results,Medium,"1. Select filter combination that has no matching cases
+2. Click Apply","Case table shows ""No cases found"" or empty state. Summary counters show 0 for all categories. Train diagram shows no units or appropriate empty state.",,,,
+UAT-010,Filters - Summary Counters,As a user I can see summary counters update when filters are applied,High,"1. Note initial counter values (Total, New, Completed, Monitor, Rejected)
+2. Apply any filter
+3. Compare counter values","Counters show counts only for filtered cases (e.g., if 2 rejected cases are visible after filter, Rejected counter shows 2).",,,,
+UAT-011,Filters - Train Diagram,As a user I can see the train diagram update when filtering by Unit,Medium,"1. Select specific Unit from Unit filter
+2. Click Apply",Counters show counts only for the selected Unit. The train diagram is also updated to the respective image. The cases shown are specfic to the selected Unit.,,,,
+UAT-012,Filters - Cascading,As a user I can see filters cascade based on my selections,Medium,"1. Select TOC
+2. Open Class dropdown",Class dropdown shows only classes relevant to selected TOC.,,,,
+UAT-013,Filters - Persistence,As a user I can see my filter selections persist during my session,Low,"1. Apply specific filters
+2. Click on a case to view details
+3. Return to case list page",Previously applied filters remain selected. Case list shows filtered results.,,,,
+UAT-014,Filters - Clear Individual,As a user I can change individual filters back to All while keeping other filters active,Medium,"1. Select TOC, Class, and Depot filters
+2. Click Apply
+3. Change TOC back to ""All""
+4. Click Apply",Cases now filtered only by Class and Depot. TOC filter is effectively removed.,,,,
+UAT-015,Filters - Case Table Columns,As a user I can see all required columns in filtered case results,High,"1. Apply any filter
+2. Review case table","Filtered cases display all columns: ID, Unit, Vehicle, System, Status, Priority, Title, Date.",,,,
+UAT-016,Filters - Pagination,As a user I can navigate through paginated filtered results,Medium,"1. Apply filter that returns more than 100 cases
+2. Check pagination at bottom of table","Pagination shows correct page count for filtered results (e.g., ""1-4 of 150""). Navigation works correctly.",,,,
+UAT-018,Filters - Dropdown Population,As a user I can see all available filter options in the dropdowns,High,"1. Click TOC dropdown
+2. Click Class dropdown
+3. Click Depot dropdown
+4. Click Unit dropdown","All dropdowns show ""All"" option plus all available values from database (TOCs, Classes, Depots, Units).",,,,
+UAT-019,Summary Counters,As a user I can see all summary counters displayed on page load,High,"1. Navigate to Case Management page
+2. Observe summary counter section","Four summary counters are displayed: Total, Open, Completed, and Rejected. Each shows a numerical value.",,,,
+UAT-020,Summary Counters - Accuracy,As a user I can see all counters accurately reflect the number of cases for each status,High,"1. Navigate to Case Management page
+2. Apply a filter
+3. Note all counter values (Total, Open, Completed, Rejected)
+4. Count cases in the case table for each status
+5. Compare counter values with actual counts","Each counter accurately matches the number of cases in the filtered results: Total reflects all filtered cases, Open reflects filtered cases with Open status, Completed reflects filtered cases with Completed status, and Rejected reflects filtered cases with Rejected status.",,,,
+UAT-021,Summary Counters - Calculation,As a user I can verify that status counters sum equals the Total counter,Medium,"1. Navigate to Case Management page
+2. Note all counter values
+3. Add Open + Completed + Rejected","The sum of Open, Completed, and Rejected counters equals the Total counter (accounting for any other statuses if applicable).",,,,
+UAT-022,Summary Counters - Zero Values,As a user I can see counters display zero when no cases exist for a status,Medium,"1. Navigate to Case Management page
+2. Identify any counter showing 0
+3. Verify no cases in the table have that status",Counter displays 0 when no cases have that status. Display is clear and readable.,,,,
+UAT-023,Summary Counters - Visual Formatting,As a user I can see counters are clearly formatted and readable,Low,"1. Navigate to Case Management page
+2. Review counter display formatting",Each counter displays a large number above a status label. Spacing and typography are consistent. Counters are visually distinct from each other.,,,,
+UAT-024,Summary Counters - Real-time Update,As a user I can see counters update when a new case is created,Medium,"1. Note current counter values
+2. Click ""Create New Case"" button
+3. Complete case creation with a specific status
+4. Return to case list
+5. Observe counter values","Total counter increases by 1. The relevant status counter (e.g., Open) also increases by 1. Other counters remain unchanged.",,,,
+UAT-025,Summary Counters - Case Status Change,As a user I can see counters update when a case status changes,Medium,"1. Note current counter values
+2. Open a case with Status = ""Open""
+3. Change status to ""Completed""
+4. Save and return to case list",Open counter decreases by 1. Completed counter increases by 1. Total counter remains unchanged.,,,,
+UAT-026,Summary Counters - Page Refresh,As a user I can see accurate counter values after refreshing the page,Low,"1. Note current counter values
+2. Refresh the page (F5 or browser refresh)
+3. Observe counter values after page reload",Counter values remain accurate and consistent with the cases in the database.,,,,
+UAT-027,Unit Visualisation,As a user I cannot see the unit visualisation when no unit is selected,High,"1. Navigate to Case Management page
+2. Ensure Unit filter is set to ""All""
+3. Observe the area between summary counters and case table",No train diagram is displayed. The area between summary counters and case table is empty or shows placeholder content.,,,,
+UAT-028,Unit Visualisation - Display,As a user I can see the unit visualisation when I select a specific unit,High,"1. Navigate to Case Management page
+2. Select a specific unit from the Unit dropdown (e.g., ""150208"")
+3. Click Apply
+4. Observe the area between summary counters and case table",Train diagram is displayed showing visual representation of the selected unit. The unit shows carriages with appropriate styling.,,,,
+UAT-029,Unit Visualisation - Carriage Representation,As a user I can see accurate carriage representation for the selected unit,Medium,"1. Select a 2-car unit from the Unit dropdown
+2. Click Apply
+3. Observe carriage configuration
+4. Select a 3-car unit from the Unit dropdown
+5. Click Apply
+6. Observe carriage configuration","Train diagram displays the correct number and configuration of carriages for the selected unit (e.g., 2-car units show 2 carriages, 3-car units show 3 carriages).",,,,
+UAT-030,Unit Visualisation - Subsystem Highlighting,As a user I can see subsystem highlighting on the train diagram,Medium,"1. Select a unit from the Unit dropdown
+2. Click Apply
+3. Observe the train diagram","Highlighted sections are displayed on the train diagram showing different subsystems (e.g., pink/red areas on carriages). The highlighting is always present regardless of alert status.",,,,
+UAT-031,Unit Visualisation - Clear Filter,As a user I can see the visualisation disappear when I clear the unit filter,High,"1. Select a specific unit from Unit dropdown
+2. Click Apply
+3. Verify train diagram is displayed
+4. Click Clear button
+5. Observe the train diagram area","Unit filter is reset to ""All"". Train diagram disappears and is no longer visible.",,,,
+UAT-032,Unit Visualisation - Switch Units,As a user I can see the visualisation update when I select a different unit,Medium,"1. Select a specific unit (e.g., ""150208"") from Unit dropdown
+2. Click Apply
+3. Note the train diagram displayed
+4. Select a different unit (e.g., ""150213"") from Unit dropdown
+5. Click Apply",Train diagram updates to show the newly selected unit. Carriage configuration updates to reflect the new unit.,,,,
+UAT-033,Unit Visualisation - Persistence,As a user I can see the visualisation persist when applying other filters,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Verify train diagram is displayed
+4. Select a TOC or Class filter
+5. Click Apply",Train diagram remains visible as long as the unit filter is still set to a specific unit. The diagram continues to show the selected unit even when other filters are applied.,,,,
+UAT-034,Subsystem Selection,As a user I can click on subsystem blocks to select them,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Observe the subsystem blocks on the train diagram
+4. Click on a subsystem block",The clicked subsystem block is visually selected (e.g.  highlighted border or visual change). The subsystem is added to the filter criteria.,,,,
+UAT-035,Subsystem Selection - Filter Cases,As a user I can see cases filtered when I select subsystems,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Note the current case count in the case table
+4. Click on one or more subsystem blocks on the train diagram
+5. Observe the case table",Case table updates to show only cases related to the selected subsystem(s). Cases unrelated to the selected subsystems are hidden.,,,,
+UAT-036,Subsystem Selection - Filter Counters,As a user I can see summary counters update when I select subsystems,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Note the current summary counter values
+4. Click on one or more subsystem blocks on the train diagram
+5. Observe the summary counters","Summary counters (Total, Open, Completed, Rejected) update to reflect only cases related to the selected subsystem(s).",,,,
+UAT-037,Subsystem Selection - Multiple Subsystems,As a user I can select multiple subsystems simultaneously,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on a subsystem block (e.g., green block)
+4. Click on another subsystem block (e.g., red block)
+5. Observe the train diagram and case table",Both subsystem blocks are visually selected. Case table shows cases related to either of the selected subsystems. Summary counters update accordingly.,,,,
+UAT-038,Subsystem Selection - Deselect,As a user I can deselect a subsystem by clicking it again,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on a subsystem block to select it
+4. Verify cases are filtered
+5. Click the same subsystem block again","The subsystem block is deselected (visual selection removed). Case table and summary counters update to remove the subsystem filter. If no subsystems remain selected, all cases for the unit are displayed.",,,,
+UAT-039,Subsystem Selection - Clear,As a user I can clear all subsystem selections using the Clear button,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on one or more subsystem blocks
+4. Verify cases are filtered
+5. Click the Clear button","All subsystem selections are cleared. Unit filter is reset to ""All"". Train diagram disappears. Case table shows all cases. Summary counters show totals for all cases.",,,,
+UAT-040,Subsystem Selection - Visual Indication,As a user I can visually distinguish between selected and unselected subsystems,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Observe all subsystem blocks in their default state
+4. Click on one subsystem block
+5. Compare selected vs unselected subsystem blocks",Selected subsystem blocks are coloured in. Unselected subsystem blocks maintain their default appearance. The difference is easily distinguishable.,,,,
+UAT-041,Subsystem Selection - Persistence,As a user I can see subsystem selections persist when switching views,Low,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on one or more subsystem blocks
+4. Click on a case to view details
+5. Return to case list page",Previously selected subsystems remain selected. Train diagram shows the same subsystem selections. Case table shows the filtered results.,,,,
+UAT-042,Create Case - Open Dialog,As a user I can open the Create Case dialog,High,"1. Navigate to Case Management page
+2. Click the ""Create New Case"" button
+3. Observe the dialog","Create Case dialog opens as a modal overlay. Dialog displays all form fields: Title, Unit, Vehicle, System, Status, Priority, Description, Initial Meeting Minute, and Initial Record.",,,,
+UAT-043,Create Case - Close Dialog (X),As a user I can close the Create Case dialog using the X button,Medium,"1. Click ""Create New Case"" button
+2. Observe the dialog is open
+3. Click the X button in the top right corner of the dialog",Dialog closes without creating a case. User returns to the Case Management page. No new case is created.,,,,
+UAT-044,Create Case - Cancel,As a user I can cancel case creation using the Cancel button,Medium,"1. Click ""Create New Case"" button
+2. Fill in some fields
+3. Click the ""Cancel"" button",Dialog closes without creating a case. User returns to the Case Management page. No new case is created. Any entered data is discarded.,,,,
+UAT-045,Create Case - Validation,As a user I can see validation when required fields are missing or invalid,High,"1. Click ""Create New Case"" button
+2. Leave required fields empty
+3. Click ""Create Case"" button
+4. Observe validation messages",Validation prevents case creation. Clear error messages or visual indicators show which fields are required or invalid. Case is not created until required fields are completed correctly.,,,,
+UAT-046,Create Case - Field Population,As a user I can see all dropdown fields populated with valid options,High,"1. Click ""Create New Case"" button
+2. Click on Unit dropdown
+3. Click on Vehicle dropdown
+4. Click on System dropdown
+5. Click on Status dropdown
+6. Click on Priority dropdown","All dropdown fields display appropriate options from the database. Unit shows available units, Vehicle shows available vehicles, System shows subsystems, Status shows available statuses (Open, Completed, Rejected), Priority shows priority levels.",,,,
+UAT-047,Create Case - Create Successfully,As a user I can successfully create a new case with all fields completed,High,"1. Click ""Create New Case"" button
+2. Enter Title
+3. Select Unit
+4. Select Vehicle
+5. Select System
+6. Select Status
+7. Select Priority
+8. Enter Description
+9. Enter Initial Meeting Minute
+10. Enter Initial Record
+11. Click ""Create Case"" button",Case is created successfully. Dialog closes. User returns to Case Management page. New case appears in the case table. Summary counters update to include the new case. Success message may be displayed.,,,,
+UAT-048,Create Case - Minimum Required Fields,As a user I can create a case with only required fields,High,"1. Click ""Create New Case"" button
+2. Complete only required fields
+3. Leave optional fields empty
+4. Click ""Create Case"" button",Case is created successfully with required fields populated. Optional fields are saved as empty/null. New case appears in the case table.,,,,
+UAT-049,Create Case - Text Field Input,As a user I can enter text in all free text fields,High,"1. Click ""Create New Case"" button
+2. Click in the Title field and type text
+3. Click in the Description field and type multi-line text
+4. Click in the Initial Meeting Minute field and type multi-line text
+5. Click in the Initial Record field and type multi-line text","All text fields accept input. Title field accepts single-line text. Description, Initial Meeting Minute, and Initial Record fields accept multi-line text with line breaks preserved. Text is visible as typed.",,,,
+UAT-050,Create Case - Default Values,As a user I can see default values pre-populated in the form,Medium,"1. Click ""Create New Case"" button
+2. Observe the Status and Priority fields","Status field defaults to a sensible value (e.g., ""New"" or ""Open""). Priority field defaults to a sensible value (e.g., ""Medium""). Other fields may have defaults based on current filter selections.",,,,
+UAT-051,Create Case - Vehicle Depends on Unit,As a user I can see the Vehicle dropdown update based on selected Unit,High,"1. Click ""Create New Case"" button
+2. Select a specific Unit
+3. Open the Vehicle dropdown",Vehicle dropdown shows only vehicles associated with the selected Unit. Vehicles are filtered appropriately.,,,,
+UAT-056,Create Case - Case Appears in Table,As a user I can see my newly created case appear in the case table,High,"1. Create a new case successfully
+2. Observe the case table","New case appears in the case table with all entered information displayed correctly (Title, Unit, Vehicle, System, Status, Priority, Date). Case is positioned appropriately in the table (e.g., at the top or sorted by date).",,,,
+UAT-057,Create Case - Counter Update,As a user I can see summary counters update after creating a case,High,"1. Note current summary counter values
+2. Create a new case with Status = ""Open""
+3. Observe summary counters",Total counter increases by 1. Open counter increases by 1. Other status counters remain unchanged.,,,,
+UAT-058,Case Detail View - Open and Close,As a user I can open and close the case detailed view modal,High,"1. Navigate to Case Management page
+2. Locate a case in the case table
+3. Click on the case row
+4. Review the header section (case ID, title, status, priority, unit, vehicle)
+5. Review the Description section
+6. Click on the area outside of the modal","Detailed view modal opens as an overlay. Modal displays case header with all information correct and matching the selected case. Description is displayed below the header with readable formatting. Tabs are displayed (Records, Work Orders, Alerts). Edit Case and Reject Case buttons are visible. Clicking outside the modal closes it and returns to the Case Management page with previously applied filters intact.",,,,
+UAT-059,Case Detail View - Tab Navigation,As a user I can navigate between tabs in the detailed view,High,"1. Open a case detailed view
+2. Observe which tab is active by default
+3. Click on the Work Orders tab
+4. Click on the Alerts tab
+5. Return to the Records tab","Records tab is active by default when opening the modal. Records content is displayed immediately. Each tab becomes active when clicked (highlighted/underlined). Tab content updates to show the relevant information. Navigation between tabs is smooth and content loads correctly.",,,,
+UAT-064,Records Tab - View Records,As a user I can see all records associated with a case,High,"1. Open a case detailed view
+2. Ensure Records tab is active
+3. Review the records table",Records table displays two columns: DATE and RECORD. All records associated with the case are displayed in chronological order. Dates and record text are clearly visible.,,,,
+UAT-065,Records Tab - Manage Records,"As a user I can add , edit and delete records",High,"1. Open a case detailed view
+2. Click Records tab
+3. Click ""Add New Record"" button
+4. Select a date and enter text in the Update field
+5. Click Save to create the record
+6. Click Cancel on another new record to verify cancellation
+7. Click Edit button on an existing record
+8. Modify the record text and save changes
+9. Click Delete button on a record
+10. Confirm deletion","Add New Record dialog opens with Date and Update fields. New records are created and saved successfully, appearing in chronological order. Cancel discards entered data without creating a record. Existing records can be edited and changes are saved. Records can be deleted and are permanently removed from the records table. Edit and Delete buttons are available on each record row.",,,,
+UAT-070,Work Orders Tab - View Work Orders,As a user I can see all work orders linked to a case,High,"1. Open a case detailed view
+2. Click Work Orders tab
+3. Review the work orders table","Work orders table displays all linked work orders with columns: ID, REPORT, ACTION, DATE, ROOT CODE, SYMPTOM, STATUS. All work order information is clearly visible and accurate.",,,,
+UAT-071,Work Orders Tab - Link and Unlink Work Orders,As a user I can link and unlink work orders to a case,High,"1. Open a case detailed view
+2. Click Work Orders tab
+3. Click on the ""Select a work order"" dropdown
+4. Select a work order from the dropdown list
+5. Click Add button
+6. Verify work order appears in the table
+7. Click unlink/remove option on a linked work order
+8. Confirm removal if prompted
+9. Open a case with no linked work orders and verify empty state","Dropdown opens and displays available work orders with scrollbar if needed. Selected work order is linked and appears in the table with all details (ID, REPORT, ACTION, DATE, ROOT CODE, SYMPTOM, STATUS). Dropdown resets after adding. Work orders can be unlinked and are removed from the table for this case. Empty state shows appropriate message when no work orders are linked.",,,,
+UAT-075,Alerts Tab - View Alerts with Priority,As a user I can see all alerts associated with a case with priority indicators,High,"1. Open a case detailed view
+2. Click Alerts tab
+3. Review the alerts displayed
+4. Review alert priority badges","All alerts linked to the case are displayed as individual cards. Each alert card shows priority badge (HIGH, MEDIUM, LOW), timestamp, alert title, and alert description. Priority badges are visually distinct with different colours or styling. Priority is easily identifiable at a glance.",,,,
+UAT-076,Alerts Tab - View Signal Trace,As a user I can view the signal trace visualization for an alert,High,"1. Open a case detailed view
+2. Click Alerts tab
+3. Locate alerts with View Trace buttons
+4. Click ""View trace"" button on an alert
+5. Review the signal trace visualization","Each alert card displays a ""View trace"" button. Button is clearly visible and clickable. Signal trace visualization is displayed showing a time-series graph. Graph displays signal values over time with time offset labels (e.g., -2m to +2m). Data points and trend line are clearly visible. Graph title shows the signal name and time window.",,,,
+UAT-079,Alerts Tab - Empty State,As a user I can see appropriate messaging when no alerts are linked,Medium,"1. Open a case with no linked alerts
+2. Click Alerts tab","Alerts section is empty or shows ""No alerts linked"" message. No alert cards are displayed.",,,,
+UAT-077,Case Detail View - Edit and Reject Case,As a user I can edit a case or reject a case using the action buttons,High,"1. Open a case detailed view with Status other than Rejected
+2. Click the ""Edit Case"" button
+3. Verify edit functionality
+4. Return to case detail view
+5. Click the ""Reject Case"" button
+6. Provide rejection reason if prompted
+7. Confirm rejection
+8. Open a case with Status = Rejected
+9. Observe the Reject Case button state","Edit Case dialog opens allowing modification of case details (title, unit, vehicle, system, status, priority, description) with current information pre-populated. Reject Case button successfully updates case status to Rejected and saves rejection reason if provided. Modal may close or update to reflect new status. Case appears as Rejected in the case table. For already rejected cases, Reject Case button is disabled, greyed out, or not displayed.",,,,

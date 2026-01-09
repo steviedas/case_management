@@ -1,0 +1,32 @@
+ID,FEATURE,DESCRIPTION,PRIORITY,TEST STEPS,EXPECTED RESULT,STATUS,TESTED BY,TEST DATE,COMMENTS
+UAT-027,Unit Visualisation,As a user I cannot see the unit visualisation when no unit is selected,High,"1. Navigate to Case Management page
+2. Ensure Unit filter is set to ""All""
+3. Observe the area between summary counters and case table",No train diagram is displayed. The area between summary counters and case table is empty or shows placeholder content.,,,,
+UAT-028,Unit Visualisation - Display,As a user I can see the unit visualisation when I select a specific unit,High,"1. Navigate to Case Management page
+2. Select a specific unit from the Unit dropdown (e.g., ""150208"")
+3. Click Apply
+4. Observe the area between summary counters and case table",Train diagram is displayed showing visual representation of the selected unit. The unit shows carriages with appropriate styling.,,,,
+UAT-029,Unit Visualisation - Carriage Representation,As a user I can see accurate carriage representation for the selected unit,Medium,"1. Select a 2-car unit from the Unit dropdown
+2. Click Apply
+3. Observe carriage configuration
+4. Select a 3-car unit from the Unit dropdown
+5. Click Apply
+6. Observe carriage configuration","Train diagram displays the correct number and configuration of carriages for the selected unit (e.g., 2-car units show 2 carriages, 3-car units show 3 carriages).",,,,
+UAT-030,Unit Visualisation - Subsystem Highlighting,As a user I can see subsystem highlighting on the train diagram,Medium,"1. Select a unit from the Unit dropdown
+2. Click Apply
+3. Observe the train diagram","Highlighted sections are displayed on the train diagram showing different subsystems (e.g., pink/red areas on carriages). The highlighting is always present regardless of alert status.",,,,
+UAT-031,Unit Visualisation - Clear Filter,As a user I can see the visualisation disappear when I clear the unit filter,High,"1. Select a specific unit from Unit dropdown
+2. Click Apply
+3. Verify train diagram is displayed
+4. Click Clear button
+5. Observe the train diagram area","Unit filter is reset to ""All"". Train diagram disappears and is no longer visible.",,,,
+UAT-032,Unit Visualisation - Switch Units,As a user I can see the visualisation update when I select a different unit,Medium,"1. Select a specific unit (e.g., ""150208"") from Unit dropdown
+2. Click Apply
+3. Note the train diagram displayed
+4. Select a different unit (e.g., ""150213"") from Unit dropdown
+5. Click Apply",Train diagram updates to show the newly selected unit. Carriage configuration updates to reflect the new unit.,,,,
+UAT-033,Unit Visualisation - Persistence,As a user I can see the visualisation persist when applying other filters,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Verify train diagram is displayed
+4. Select a TOC or Class filter
+5. Click Apply",Train diagram remains visible as long as the unit filter is still set to a specific unit. The diagram continues to show the selected unit even when other filters are applied.,,,,

@@ -1,0 +1,50 @@
+ID,FEATURE,DESCRIPTION,PRIORITY,TEST STEPS,EXPECTED RESULT,STATUS,TESTED BY,TEST DATE,COMMENTS
+UAT-042,Create Case - Open Dialog,As a user I can open the Create Case dialog,High,"1. Navigate to Case Management page
+2. Click the ""Create New Case"" button
+3. Observe the dialog","Create Case dialog opens as a modal overlay. Dialog displays all form fields: Title, Unit, Vehicle, System, Status, Priority, Description, Initial Meeting Minute, and Initial Record.",,,,
+UAT-043,Create Case - Close Dialog (X),As a user I can close the Create Case dialog using the X button,Medium,"1. Click ""Create New Case"" button
+2. Observe the dialog is open
+3. Click the X button in the top right corner of the dialog",Dialog closes without creating a case. User returns to the Case Management page. No new case is created.,,,,
+UAT-044,Create Case - Cancel,As a user I can cancel case creation using the Cancel button,Medium,"1. Click ""Create New Case"" button
+2. Fill in some fields
+3. Click the ""Cancel"" button",Dialog closes without creating a case. User returns to the Case Management page. No new case is created. Any entered data is discarded.,,,,
+UAT-045,Create Case - Validation,As a user I can see validation when required fields are missing or invalid,High,"1. Click ""Create New Case"" button
+2. Leave required fields empty
+3. Click ""Create Case"" button
+4. Observe validation messages",Validation prevents case creation. Clear error messages or visual indicators show which fields are required or invalid. Case is not created until required fields are completed correctly.,,,,
+UAT-046,Create Case - Field Population,As a user I can see all dropdown fields populated with valid options,High,"1. Click ""Create New Case"" button
+2. Click on Unit dropdown
+3. Click on Vehicle dropdown
+4. Click on System dropdown
+5. Click on Status dropdown
+6. Click on Priority dropdown","All dropdown fields display appropriate options from the database. Unit shows available units, Vehicle shows available vehicles, System shows subsystems, Status shows available statuses (Open, Completed, Rejected), Priority shows priority levels.",,,,
+UAT-047,Create Case - Create Successfully,As a user I can successfully create a new case with all fields completed,High,"1. Click ""Create New Case"" button
+2. Enter Title
+3. Select Unit
+4. Select Vehicle
+5. Select System
+6. Select Status
+7. Select Priority
+8. Enter Description
+9. Enter Initial Meeting Minute
+10. Enter Initial Record
+11. Click ""Create Case"" button",Case is created successfully. Dialog closes. User returns to Case Management page. New case appears in the case table. Summary counters update to include the new case. Success message may be displayed.,,,,
+UAT-048,Create Case - Minimum Required Fields,As a user I can create a case with only required fields,High,"1. Click ""Create New Case"" button
+2. Complete only required fields
+3. Leave optional fields empty
+4. Click ""Create Case"" button",Case is created successfully with required fields populated. Optional fields are saved as empty/null. New case appears in the case table.,,,,
+UAT-049,Create Case - Text Field Input,As a user I can enter text in all free text fields,High,"1. Click ""Create New Case"" button
+2. Click in the Title field and type text
+3. Click in the Description field and type multi-line text
+4. Click in the Initial Meeting Minute field and type multi-line text
+5. Click in the Initial Record field and type multi-line text","All text fields accept input. Title field accepts single-line text. Description, Initial Meeting Minute, and Initial Record fields accept multi-line text with line breaks preserved. Text is visible as typed.",,,,
+UAT-050,Create Case - Default Values,As a user I can see default values pre-populated in the form,Medium,"1. Click ""Create New Case"" button
+2. Observe the Status and Priority fields","Status field defaults to a sensible value (e.g., ""New"" or ""Open""). Priority field defaults to a sensible value (e.g., ""Medium""). Other fields may have defaults based on current filter selections.",,,,
+UAT-051,Create Case - Vehicle Depends on Unit,As a user I can see the Vehicle dropdown update based on selected Unit,High,"1. Click ""Create New Case"" button
+2. Select a specific Unit
+3. Open the Vehicle dropdown",Vehicle dropdown shows only vehicles associated with the selected Unit. Vehicles are filtered appropriately.,,,,
+UAT-056,Create Case - Case Appears in Table,As a user I can see my newly created case appear in the case table,High,"1. Create a new case successfully
+2. Observe the case table","New case appears in the case table with all entered information displayed correctly (Title, Unit, Vehicle, System, Status, Priority, Date). Case is positioned appropriately in the table (e.g., at the top or sorted by date).",,,,
+UAT-057,Create Case - Counter Update,As a user I can see summary counters update after creating a case,High,"1. Note current summary counter values
+2. Create a new case with Status = ""Open""
+3. Observe summary counters",Total counter increases by 1. Open counter increases by 1. Other status counters remain unchanged.,,,,

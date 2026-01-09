@@ -1,0 +1,40 @@
+ID,FEATURE,DESCRIPTION,PRIORITY,TEST STEPS,EXPECTED RESULT,STATUS,TESTED BY,TEST DATE,COMMENTS
+UAT-034,Subsystem Selection,As a user I can click on subsystem blocks to select them,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Observe the subsystem blocks on the train diagram
+4. Click on a subsystem block",The clicked subsystem block is visually selected (e.g.  highlighted border or visual change). The subsystem is added to the filter criteria.,,,,
+UAT-035,Subsystem Selection - Filter Cases,As a user I can see cases filtered when I select subsystems,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Note the current case count in the case table
+4. Click on one or more subsystem blocks on the train diagram
+5. Observe the case table",Case table updates to show only cases related to the selected subsystem(s). Cases unrelated to the selected subsystems are hidden.,,,,
+UAT-036,Subsystem Selection - Filter Counters,As a user I can see summary counters update when I select subsystems,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Note the current summary counter values
+4. Click on one or more subsystem blocks on the train diagram
+5. Observe the summary counters","Summary counters (Total, Open, Completed, Rejected) update to reflect only cases related to the selected subsystem(s).",,,,
+UAT-037,Subsystem Selection - Multiple Subsystems,As a user I can select multiple subsystems simultaneously,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on a subsystem block (e.g., green block)
+4. Click on another subsystem block (e.g., red block)
+5. Observe the train diagram and case table",Both subsystem blocks are visually selected. Case table shows cases related to either of the selected subsystems. Summary counters update accordingly.,,,,
+UAT-038,Subsystem Selection - Deselect,As a user I can deselect a subsystem by clicking it again,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on a subsystem block to select it
+4. Verify cases are filtered
+5. Click the same subsystem block again","The subsystem block is deselected (visual selection removed). Case table and summary counters update to remove the subsystem filter. If no subsystems remain selected, all cases for the unit are displayed.",,,,
+UAT-039,Subsystem Selection - Clear,As a user I can clear all subsystem selections using the Clear button,High,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on one or more subsystem blocks
+4. Verify cases are filtered
+5. Click the Clear button","All subsystem selections are cleared. Unit filter is reset to ""All"". Train diagram disappears. Case table shows all cases. Summary counters show totals for all cases.",,,,
+UAT-040,Subsystem Selection - Visual Indication,As a user I can visually distinguish between selected and unselected subsystems,Medium,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Observe all subsystem blocks in their default state
+4. Click on one subsystem block
+5. Compare selected vs unselected subsystem blocks",Selected subsystem blocks are coloured in. Unselected subsystem blocks maintain their default appearance. The difference is easily distinguishable.,,,,
+UAT-041,Subsystem Selection - Persistence,As a user I can see subsystem selections persist when switching views,Low,"1. Select a unit from Unit dropdown
+2. Click Apply
+3. Click on one or more subsystem blocks
+4. Click on a case to view details
+5. Return to case list page",Previously selected subsystems remain selected. Train diagram shows the same subsystem selections. Case table shows the filtered results.,,,,

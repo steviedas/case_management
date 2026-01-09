@@ -1,0 +1,28 @@
+ID,FEATURE,DESCRIPTION,PRIORITY,TEST STEPS,EXPECTED RESULT,STATUS,TESTED BY,TEST DATE,COMMENTS
+UAT-019,Summary Counters,As a user I can see all summary counters displayed on page load,High,"1. Navigate to Case Management page
+2. Observe summary counter section","Four summary counters are displayed: Total, Open, Completed, and Rejected. Each shows a numerical value.",,,,
+UAT-020,Summary Counters - Accuracy,As a user I can see all counters accurately reflect the number of cases for each status,High,"1. Navigate to Case Management page
+2. Apply a filter
+3. Note all counter values (Total, Open, Completed, Rejected)
+4. Count cases in the case table for each status
+5. Compare counter values with actual counts","Each counter accurately matches the number of cases in the filtered results: Total reflects all filtered cases, Open reflects filtered cases with Open status, Completed reflects filtered cases with Completed status, and Rejected reflects filtered cases with Rejected status.",,,,
+UAT-021,Summary Counters - Calculation,As a user I can verify that status counters sum equals the Total counter,Medium,"1. Navigate to Case Management page
+2. Note all counter values
+3. Add Open + Completed + Rejected","The sum of Open, Completed, and Rejected counters equals the Total counter (accounting for any other statuses if applicable).",,,,
+UAT-022,Summary Counters - Zero Values,As a user I can see counters display zero when no cases exist for a status,Medium,"1. Navigate to Case Management page
+2. Identify any counter showing 0
+3. Verify no cases in the table have that status",Counter displays 0 when no cases have that status. Display is clear and readable.,,,,
+UAT-023,Summary Counters - Visual Formatting,As a user I can see counters are clearly formatted and readable,Low,"1. Navigate to Case Management page
+2. Review counter display formatting",Each counter displays a large number above a status label. Spacing and typography are consistent. Counters are visually distinct from each other.,,,,
+UAT-024,Summary Counters - Real-time Update,As a user I can see counters update when a new case is created,Medium,"1. Note current counter values
+2. Click ""Create New Case"" button
+3. Complete case creation with a specific status
+4. Return to case list
+5. Observe counter values","Total counter increases by 1. The relevant status counter (e.g., Open) also increases by 1. Other counters remain unchanged.",,,,
+UAT-025,Summary Counters - Case Status Change,As a user I can see counters update when a case status changes,Medium,"1. Note current counter values
+2. Open a case with Status = ""Open""
+3. Change status to ""Completed""
+4. Save and return to case list",Open counter decreases by 1. Completed counter increases by 1. Total counter remains unchanged.,,,,
+UAT-026,Summary Counters - Page Refresh,As a user I can see accurate counter values after refreshing the page,Low,"1. Note current counter values
+2. Refresh the page (F5 or browser refresh)
+3. Observe counter values after page reload",Counter values remain accurate and consistent with the cases in the database.,,,,
