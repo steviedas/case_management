@@ -1,13 +1,3 @@
--- =============================================
--- Case Management Star Schema DDL
--- Tables ordered for optimal data population
--- =============================================
-
--- =============================================
--- PHASE 1: LOOKUP DIMENSION TABLES
--- Load these first - reference/master data
--- =============================================
-
 -- dim_priority
 IF OBJECT_ID('dbo.dim_priority', 'U') IS NULL
 BEGIN
@@ -171,11 +161,6 @@ BEGIN
 END;
 
 
--- =============================================
--- PHASE 2: DEPENDENT DIMENSION TABLES
--- Load after Phase 1 (depends on dim_delphi_unit)
--- =============================================
-
 -- dim_vehicle
 IF OBJECT_ID('dbo.dim_vehicle', 'U') IS NULL
 BEGIN
@@ -213,19 +198,11 @@ BEGIN
 END;
 
 
--- =============================================
--- PHASE 3: TRACE REFERENCE TABLE
--- Load before alert tables so they can reference it
--- =============================================
-
--- fact_alert_trace_reference
--- Stores references to signal trace files in ADLS storage account
--- Actual time-series data is stored in delta tables/parquet files in ADLS
 IF OBJECT_ID('dbo.fact_alert_trace_reference', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.fact_alert_trace_reference (
         id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_alert_trace_reference PRIMARY KEY,
-        storage_path NVARCHAR(1000) NOT NULL,
+        storage_path NVARCHAR(850) NOT NULL,
         file_format NVARCHAR(50) NULL,
         date_created DATETIME2 NOT NULL DEFAULT GETDATE(),
         trace_start_time DATETIME2 NULL,
@@ -257,12 +234,6 @@ BEGIN
     ON dbo.fact_alert_trace_reference (date_created);
 END;
 
-
--- =============================================
--- PHASE 4: ALERT FACT TABLE
--- Load after Phase 3 (depends on fact_alert_trace_reference)
--- Combines instrumentel alerts and PB events into a single table
--- =============================================
 
 -- fact_alert
 IF OBJECT_ID('dbo.fact_alert', 'U') IS NULL
@@ -356,11 +327,6 @@ BEGIN
     ON dbo.fact_alert (trace_ref_id);
 END;
 
-
--- =============================================
--- PHASE 5: CORE FACT TABLE
--- Load after Phase 1-4 (the main entity)
--- =============================================
 
 -- fact_cases
 IF OBJECT_ID('dbo.fact_cases', 'U') IS NULL
@@ -475,11 +441,6 @@ BEGIN
 END;
 
 
--- =============================================
--- PHASE 6: CASE-RELATED FACT TABLES
--- Load after Phase 5 (depends on fact_cases)
--- =============================================
-
 -- fact_records
 IF OBJECT_ID('dbo.fact_records', 'U') IS NULL
 BEGIN
@@ -530,20 +491,17 @@ BEGIN
 END;
 
 
--- =============================================
--- PHASE 7: BRIDGE/JUNCTION TABLES
--- Load last (depends on multiple tables)
--- =============================================
-
 -- case_intervention
 IF OBJECT_ID('dbo.case_intervention', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.case_intervention (
         case_id INT NOT NULL,
-        master_intervention_key INT NOT NULL,
+        master_intervention_key NVARCHAR(100) NOT NULL,
         CONSTRAINT PK_case_intervention PRIMARY KEY (case_id, master_intervention_key),
         CONSTRAINT FK_case_intervention_fact_cases
-            FOREIGN KEY (case_id) REFERENCES dbo.fact_cases(id)
+            FOREIGN KEY (case_id) REFERENCES dbo.fact_cases(id),
+        CONSTRAINT FK_case_intervention_fact_interventions
+            FOREIGN KEY (master_intervention_key) REFERENCES dbo.fact_interventions(master_intervention_key)
     );
 END;
 
@@ -560,7 +518,6 @@ END;
 
 
 -- case_alert
--- Combines instrumentel alert and PB event case assignments
 IF OBJECT_ID('dbo.case_alert', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.case_alert (
