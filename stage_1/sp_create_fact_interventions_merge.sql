@@ -112,7 +112,7 @@ BEGIN
             Sum_Total_Delay_Mins,
             Count_Full_Cancellations,
             Porterbrook_Asset,
-            COALESCE(P_Symptom_Verified, P_Symptom_Code_Inferred) AS P_Symptom_Code,
+            COALESCE(P_Symptom_Verified, P_Symptom_Code_Inferred) AS P_Symptom_Code_Inferred,
             Is_Verified,
             COALESCE(Master_Intervention_Key, Intervention_Key) AS Master_Intervention_Key,
             COALESCE(P_Root_Code_Verified, P_Root_Code_Inferred_Tertiary) AS P_Root_Code_Display,
