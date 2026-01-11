@@ -9,12 +9,12 @@ BEGIN
 
     CREATE TABLE #src_class
     (
-        class_name NVARCHAR(3) NOT NULL PRIMARY KEY
+        class_name NVARCHAR(10) NOT NULL PRIMARY KEY
     );
 
     INSERT INTO #src_class (class_name)
     SELECT DISTINCT
-        LEFT(NULLIF(LTRIM(RTRIM(Vehicle_Class)), N''), 3)
+        NULLIF(LTRIM(RTRIM(Vehicle_Class)), N'')
     FROM (
         SELECT DISTINCT Vehicle_Class
         FROM dbo.EngineAutoCoding
