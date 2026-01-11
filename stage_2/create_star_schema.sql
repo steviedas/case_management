@@ -205,6 +205,7 @@ BEGIN
         storage_path NVARCHAR(850) NOT NULL,
         file_format NVARCHAR(50) NULL,
         date_created DATETIME2 NOT NULL DEFAULT GETDATE(),
+        date_updated DATETIME2 NOT NULL DEFAULT GETDATE(),
         trace_start_time DATETIME2 NULL,
         trace_end_time DATETIME2 NULL,
         signal_count INT NULL,
@@ -239,7 +240,7 @@ END;
 IF OBJECT_ID('dbo.fact_alert', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.fact_alert (
-        id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_alert PRIMARY KEY,
+        alert_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_alert PRIMARY KEY,
         title NVARCHAR(200) NULL,
         alert_timestamp DATETIME2 NULL,
         status_id INT NULL,
@@ -328,11 +329,11 @@ BEGIN
 END;
 
 
--- fact_cases
-IF OBJECT_ID('dbo.fact_cases', 'U') IS NULL
+-- fact_case
+IF OBJECT_ID('dbo.fact_case', 'U') IS NULL
 BEGIN
-    CREATE TABLE dbo.fact_cases (
-        id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_cases PRIMARY KEY,
+    CREATE TABLE dbo.fact_case (
+        case_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_case PRIMARY KEY,
         priority_id INT NULL,
         status_id INT NULL,
         rfs NVARCHAR(MAX) NULL,
@@ -341,24 +342,25 @@ BEGIN
         system_id INT NULL,
         linked_work_orders NVARCHAR(MAX) NULL,
         created_at DATETIME2 NULL,
-        updated_by DATETIME2 NULL,
+        updated_at DATETIME2 NULL,
+        updated_by VARCHAR(100) NULL,
         toc_id INT NULL,
         class_id INT NULL,
         depot_id INT NULL,
         vehicle_id INT NULL,
-        CONSTRAINT FK_fact_cases_dim_priority
+        CONSTRAINT FK_fact_case_dim_priority
             FOREIGN KEY (priority_id) REFERENCES dbo.dim_priority(priority_id),
-        CONSTRAINT FK_fact_cases_dim_status
+        CONSTRAINT FK_fact_case_dim_status
             FOREIGN KEY (status_id) REFERENCES dbo.dim_status(status_id),
-        CONSTRAINT FK_fact_cases_dim_system
+        CONSTRAINT FK_fact_case_dim_system
             FOREIGN KEY (system_id) REFERENCES dbo.dim_system(system_id),
-        CONSTRAINT FK_fact_cases_dim_toc
+        CONSTRAINT FK_fact_case_dim_toc
             FOREIGN KEY (toc_id) REFERENCES dbo.dim_toc(toc_id),
-        CONSTRAINT FK_fact_cases_dim_class
+        CONSTRAINT FK_fact_case_dim_class
             FOREIGN KEY (class_id) REFERENCES dbo.dim_class(class_id),
-        CONSTRAINT FK_fact_cases_dim_depot
+        CONSTRAINT FK_fact_case_dim_depot
             FOREIGN KEY (depot_id) REFERENCES dbo.dim_depot(depot_id),
-        CONSTRAINT FK_fact_cases_dim_vehicle
+        CONSTRAINT FK_fact_case_dim_vehicle
             FOREIGN KEY (vehicle_id) REFERENCES dbo.dim_vehicle(vehicle_id)
     );
 END;
@@ -366,141 +368,141 @@ END;
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_cases_status_id'
-      AND object_id = OBJECT_ID('dbo.fact_cases')
+    WHERE name = 'IX_fact_case_status_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_cases_status_id
-    ON dbo.fact_cases (status_id);
+    CREATE NONCLUSTERED INDEX IX_fact_case_status_id
+    ON dbo.fact_case (status_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_cases_priority_id'
-      AND object_id = OBJECT_ID('dbo.fact_cases')
+    WHERE name = 'IX_fact_case_priority_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_cases_priority_id
-    ON dbo.fact_cases (priority_id);
+    CREATE NONCLUSTERED INDEX IX_fact_case_priority_id
+    ON dbo.fact_case (priority_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_cases_toc_id'
-      AND object_id = OBJECT_ID('dbo.fact_cases')
+    WHERE name = 'IX_fact_case_toc_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_cases_toc_id
-    ON dbo.fact_cases (toc_id);
+    CREATE NONCLUSTERED INDEX IX_fact_case_toc_id
+    ON dbo.fact_case (toc_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_cases_class_id'
-      AND object_id = OBJECT_ID('dbo.fact_cases')
+    WHERE name = 'IX_fact_case_class_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_cases_class_id
-    ON dbo.fact_cases (class_id);
+    CREATE NONCLUSTERED INDEX IX_fact_case_class_id
+    ON dbo.fact_case (class_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_cases_depot_id'
-      AND object_id = OBJECT_ID('dbo.fact_cases')
+    WHERE name = 'IX_fact_case_depot_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_cases_depot_id
-    ON dbo.fact_cases (depot_id);
+    CREATE NONCLUSTERED INDEX IX_fact_case_depot_id
+    ON dbo.fact_case (depot_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_cases_system_id'
-      AND object_id = OBJECT_ID('dbo.fact_cases')
+    WHERE name = 'IX_fact_case_system_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_cases_system_id
-    ON dbo.fact_cases (system_id);
+    CREATE NONCLUSTERED INDEX IX_fact_case_system_id
+    ON dbo.fact_case (system_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_cases_vehicle_id'
-      AND object_id = OBJECT_ID('dbo.fact_cases')
+    WHERE name = 'IX_fact_case_vehicle_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_cases_vehicle_id
-    ON dbo.fact_cases (vehicle_id);
+    CREATE NONCLUSTERED INDEX IX_fact_case_vehicle_id
+    ON dbo.fact_case (vehicle_id);
 END;
 
 
--- fact_records
-IF OBJECT_ID('dbo.fact_records', 'U') IS NULL
+-- fact_record
+IF OBJECT_ID('dbo.fact_record', 'U') IS NULL
 BEGIN
-    CREATE TABLE dbo.fact_records (
-        id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_records PRIMARY KEY,
+    CREATE TABLE dbo.fact_record (
+        record_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_record PRIMARY KEY,
         created_at DATETIME2 NULL,
         updated_at DATETIME2 NULL,
         record NVARCHAR(MAX) NULL,
         case_id INT NOT NULL,
         author NVARCHAR(100) NULL,
         record_type NVARCHAR(50) NULL,
-        CONSTRAINT FK_fact_records_fact_cases
-            FOREIGN KEY (case_id) REFERENCES dbo.fact_cases(id)
+        CONSTRAINT FK_fact_record_fact_case
+            FOREIGN KEY (case_id) REFERENCES dbo.fact_case(case_id)
     );
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_records_case_id'
-      AND object_id = OBJECT_ID('dbo.fact_records')
+    WHERE name = 'IX_fact_record_case_id'
+      AND object_id = OBJECT_ID('dbo.fact_record')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_records_case_id
-    ON dbo.fact_records (case_id);
+    CREATE NONCLUSTERED INDEX IX_fact_record_case_id
+    ON dbo.fact_record (case_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_records_created_at'
-      AND object_id = OBJECT_ID('dbo.fact_records')
+    WHERE name = 'IX_fact_record_created_at'
+      AND object_id = OBJECT_ID('dbo.fact_record')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_records_created_at
-    ON dbo.fact_records (created_at);
+    CREATE NONCLUSTERED INDEX IX_fact_record_created_at
+    ON dbo.fact_record (created_at);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_records_record_type'
-      AND object_id = OBJECT_ID('dbo.fact_records')
+    WHERE name = 'IX_fact_record_record_type'
+      AND object_id = OBJECT_ID('dbo.fact_record')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_records_record_type
-    ON dbo.fact_records (record_type);
+    CREATE NONCLUSTERED INDEX IX_fact_record_record_type
+    ON dbo.fact_record (record_type);
 END;
 
 
--- case_intervention
-IF OBJECT_ID('dbo.case_intervention', 'U') IS NULL
+-- bridge_case_intervention
+IF OBJECT_ID('dbo.bridge_case_intervention', 'U') IS NULL
 BEGIN
-    CREATE TABLE dbo.case_intervention (
+    CREATE TABLE dbo.bridge_case_intervention (
         case_id INT NOT NULL,
         master_intervention_key NVARCHAR(100) NOT NULL,
-        CONSTRAINT PK_case_intervention PRIMARY KEY (case_id, master_intervention_key),
-        CONSTRAINT FK_case_intervention_fact_cases
-            FOREIGN KEY (case_id) REFERENCES dbo.fact_cases(id),
-        CONSTRAINT FK_case_intervention_fact_interventions
+        CONSTRAINT PK_bridge_case_intervention PRIMARY KEY (case_id, master_intervention_key),
+        CONSTRAINT FK_bridge_case_intervention_fact_case
+            FOREIGN KEY (case_id) REFERENCES dbo.fact_case(case_id),
+        CONSTRAINT FK_bridge_case_intervention_fact_interventions
             FOREIGN KEY (master_intervention_key) REFERENCES dbo.fact_interventions(master_intervention_key)
     );
 END;
@@ -508,62 +510,88 @@ END;
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_case_intervention_master_intervention_key'
-      AND object_id = OBJECT_ID('dbo.case_intervention')
+    WHERE name = 'IX_bridge_case_intervention_master_intervention_key'
+      AND object_id = OBJECT_ID('dbo.bridge_case_intervention')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_case_intervention_master_intervention_key
-    ON dbo.case_intervention (master_intervention_key);
+    CREATE NONCLUSTERED INDEX IX_bridge_case_intervention_master_intervention_key
+    ON dbo.bridge_case_intervention (master_intervention_key);
 END;
 
 
--- case_alert
-IF OBJECT_ID('dbo.case_alert', 'U') IS NULL
+-- bridge_case_alert
+IF OBJECT_ID('dbo.bridge_case_alert', 'U') IS NULL
 BEGIN
-    CREATE TABLE dbo.case_alert (
+    CREATE TABLE dbo.bridge_case_alert (
         case_id INT NOT NULL,
         ins_alt_id INT NOT NULL,
         date_assigned DATETIME2 NULL,
         assigned_by NVARCHAR(100) NULL,
         assigned_notes NVARCHAR(500) NULL,
         alert_source NVARCHAR(20) NOT NULL,
-        CONSTRAINT PK_case_alert PRIMARY KEY (case_id, ins_alt_id),
-        CONSTRAINT FK_case_alert_fact_cases
-            FOREIGN KEY (case_id) REFERENCES dbo.fact_cases(id),
-        CONSTRAINT FK_case_alert_fact_alert
-            FOREIGN KEY (ins_alt_id) REFERENCES dbo.fact_alert(id)
+        CONSTRAINT PK_bridge_case_alert PRIMARY KEY (case_id, ins_alt_id),
+        CONSTRAINT FK_bridge_case_alert_fact_case
+            FOREIGN KEY (case_id) REFERENCES dbo.fact_case(case_id),
+        CONSTRAINT FK_bridge_case_alert_fact_alert
+            FOREIGN KEY (ins_alt_id) REFERENCES dbo.fact_alert(alert_id)
     );
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_case_alert_ins_alt_id'
-      AND object_id = OBJECT_ID('dbo.case_alert')
+    WHERE name = 'IX_bridge_case_alert_ins_alt_id'
+      AND object_id = OBJECT_ID('dbo.bridge_case_alert')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_case_alert_ins_alt_id
-    ON dbo.case_alert (ins_alt_id);
+    CREATE NONCLUSTERED INDEX IX_bridge_case_alert_ins_alt_id
+    ON dbo.bridge_case_alert (ins_alt_id);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_case_alert_alert_source'
-      AND object_id = OBJECT_ID('dbo.case_alert')
+    WHERE name = 'IX_bridge_case_alert_alert_source'
+      AND object_id = OBJECT_ID('dbo.bridge_case_alert')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_case_alert_alert_source
-    ON dbo.case_alert (alert_source);
+    CREATE NONCLUSTERED INDEX IX_bridge_case_alert_alert_source
+    ON dbo.bridge_case_alert (alert_source);
 END;
 
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_case_alert_date_assigned'
-      AND object_id = OBJECT_ID('dbo.case_alert')
+    WHERE name = 'IX_bridge_case_alert_date_assigned'
+      AND object_id = OBJECT_ID('dbo.bridge_case_alert')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_case_alert_date_assigned
-    ON dbo.case_alert (date_assigned);
+    CREATE NONCLUSTERED INDEX IX_bridge_case_alert_date_assigned
+    ON dbo.bridge_case_alert (date_assigned);
+END;
+
+
+-- bridge_case_delphi_unit
+IF OBJECT_ID('dbo.bridge_case_delphi_unit', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.bridge_case_delphi_unit (
+        case_id INT NOT NULL,
+        unit_id INT NOT NULL,
+        CONSTRAINT PK_bridge_case_delphi_unit PRIMARY KEY (case_id, unit_id),
+        CONSTRAINT FK_bridge_case_delphi_unit_fact_case
+            FOREIGN KEY (case_id) REFERENCES dbo.fact_case(case_id),
+        CONSTRAINT FK_bridge_case_delphi_unit_dim_delphi_unit
+            FOREIGN KEY (unit_id) REFERENCES dbo.dim_delphi_unit(unit_id)
+    );
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_bridge_case_delphi_unit_unit_id'
+      AND object_id = OBJECT_ID('dbo.bridge_case_delphi_unit')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_bridge_case_delphi_unit_unit_id
+    ON dbo.bridge_case_delphi_unit (unit_id);
 END;
