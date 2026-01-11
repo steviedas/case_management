@@ -23,7 +23,7 @@ BEGIN
     INSERT INTO #src_vehicle (vehicle, unit_id)
     SELECT DISTINCT
         LTRIM(RTRIM(rh.Vehicle)) AS vehicle,
-        du.id AS unit_id
+        du.unit_id AS unit_id
     FROM dbo.RakeHistory AS rh
     INNER JOIN dbo.dim_delphi_unit AS du
         ON du.unit = LTRIM(RTRIM(rh.Unit))

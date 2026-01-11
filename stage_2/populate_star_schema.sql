@@ -1,0 +1,9 @@
+EXEC sp_populate_dim_class;
+EXEC sp_populate_dim_delphi_unit;
+EXEC sp_populate_dim_depot;
+EXEC sp_populate_dim_status;
+EXEC sp_populate_dim_system;
+EXEC sp_populate_dim_toc;
+EXEC sp_populate_dim_vehicle;
+EXEC sp_populate_dim_priority;
+EXEC sp_populate_dim_alert_status;

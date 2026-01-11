@@ -9,17 +9,14 @@ BEGIN
 
     CREATE TABLE #src_status
     (
-        name NVARCHAR(50) NOT NULL PRIMARY KEY,
+        status_name NVARCHAR(50) NOT NULL PRIMARY KEY,
         row_hash AS CONVERT(VARBINARY(32),
-            HASHBYTES('SHA2_256', COALESCE(name, N''))
+            HASHBYTES('SHA2_256', COALESCE(status_name, N''))
         ) PERSISTED
     );
 
-    INSERT INTO #src_status (name)
-    SELECT DISTINCT
-        rcm.Status
-    FROM dbo.RCMCaseManagement AS rcm
-    WHERE rcm.Status IS NOT NULL;
+    INSERT INTO #src_status (status_name)
+    VALUES (N'Open'), (N'Completed'), (N'Rejected');
 
     BEGIN TRY
         BEGIN TRAN;
@@ -29,22 +26,22 @@ BEGIN
             SELECT
                 s.*,
                 CONVERT(VARBINARY(32),
-                    HASHBYTES('SHA2_256', COALESCE(s.name, N''))
+                    HASHBYTES('SHA2_256', COALESCE(s.status_name, N''))
                 ) AS row_hash
             FROM dbo.dim_status AS s
         )
         MERGE dbo.dim_status AS tgt
         USING #src_status    AS src
-            ON tgt.name = src.name
+            ON tgt.status_name = src.status_name
 
         WHEN MATCHED
-            AND (SELECT th.row_hash FROM tgt_hashed AS th WHERE th.name = tgt.name) <> src.row_hash
+            AND (SELECT th.row_hash FROM tgt_hashed AS th WHERE th.status_name = tgt.status_name) <> src.row_hash
         THEN UPDATE SET
-            tgt.name = src.name
+            tgt.status_name = src.status_name
 
         WHEN NOT MATCHED BY TARGET
-        THEN INSERT (name)
-            VALUES (src.name)
+        THEN INSERT (status_name)
+            VALUES (src.status_name)
 
         WHEN NOT MATCHED BY SOURCE
         THEN DELETE;
