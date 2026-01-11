@@ -1,0 +1,6 @@
+EXEC sp_populate_dim_toc;
+EXEC sp_populate_dim_class;
+EXEC sp_populate_dim_depot;
+EXEC sp_populate_dim_unit;
+EXEC sp_populate_dim_railway_calendar;
+EXEC sp_create_fact_interventions_merge;
