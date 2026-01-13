@@ -103,7 +103,7 @@ IF OBJECT_ID('dbo.dim_class', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_class (
         class_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_dim_class PRIMARY KEY,
-        class_name NVARCHAR(100) NOT NULL
+        class_name NVARCHAR(10) NOT NULL
     );
 END;
 
