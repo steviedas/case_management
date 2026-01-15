@@ -125,7 +125,7 @@ BEGIN
     CREATE TABLE dbo.dim_delphi_unit (
         unit_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_dim_delphi_unit PRIMARY KEY,
         unit NVARCHAR(50) NOT NULL,
-        number_of_vehicles INT NOT NULL,
+        number_of_vehicles INT NOT NULL CONSTRAINT DF_dim_delphi_unit_number_of_vehicles DEFAULT 0
     );
 END;
 
