@@ -124,7 +124,8 @@ IF OBJECT_ID('dbo.dim_delphi_unit', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.dim_delphi_unit (
         unit_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_dim_delphi_unit PRIMARY KEY,
-        unit NVARCHAR(50) NOT NULL
+        unit NVARCHAR(50) NOT NULL,
+        number_of_vehicles INT NOT NULL,
     );
 END;
 

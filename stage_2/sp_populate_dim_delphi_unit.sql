@@ -16,11 +16,12 @@ BEGIN
     );
 
     INSERT INTO #src_unit (unit)
-    SELECT DISTINCT
-        rh.Unit
+    SELECT 
+        rh.Unit,
+        COUNT(DISTINCT rh.Vehicle) AS number_of_vehicles
     FROM dbo.RakeHistory AS rh
-    WHERE rh.Unit IS NOT NULL;
-
+    WHERE rh.Unit IS NOT NULL
+    GROUP BY rh.Unit;
     BEGIN TRY
         BEGIN TRAN;
 
