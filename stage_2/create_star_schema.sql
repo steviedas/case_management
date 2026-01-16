@@ -199,6 +199,7 @@ BEGIN
 END;
 
 
+-- fact_alert_trace_reference
 IF OBJECT_ID('dbo.fact_alert_trace_reference', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.fact_alert_trace_reference (
