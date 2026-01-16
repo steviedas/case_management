@@ -249,7 +249,7 @@ BEGIN
         rejection_reason NVARCHAR(MAX) NULL,
         vehicle_id INT NULL,
         trace_ref_id INT NULL,
-        alert_source NVARCHAR(20) NOT NULL,
+        alert_source NVARCHAR(100) NOT NULL,
         toc_id INT NULL,
         class_id INT NULL,
         depot_id INT NULL,
@@ -265,8 +265,6 @@ BEGIN
             FOREIGN KEY (class_id) REFERENCES dbo.dim_class(class_id),
         CONSTRAINT FK_fact_alert_dim_depot
             FOREIGN KEY (depot_id) REFERENCES dbo.dim_depot(depot_id),
-        CONSTRAINT CHK_fact_alert_source
-            CHECK (alert_source IN ('instrumentel', 'pb_event'))
     );
 END;
 
