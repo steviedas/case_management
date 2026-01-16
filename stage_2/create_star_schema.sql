@@ -252,12 +252,21 @@ BEGIN
         vehicle_id INT NULL,
         trace_ref_id INT NULL,
         alert_source NVARCHAR(20) NOT NULL,
+        toc_id INT NULL,
+        class_id INT NULL,
+        depot_id INT NULL,
         CONSTRAINT FK_fact_alert_dim_alert_status
             FOREIGN KEY (status_id) REFERENCES dbo.dim_alert_status(alert_status_id),
         CONSTRAINT FK_fact_alert_dim_vehicle
             FOREIGN KEY (vehicle_id) REFERENCES dbo.dim_vehicle(vehicle_id),
         CONSTRAINT FK_fact_alert_fact_alert_trace_reference
             FOREIGN KEY (trace_ref_id) REFERENCES dbo.fact_alert_trace_reference(id),
+        CONSTRAINT FK_fact_alert_dim_toc
+            FOREIGN KEY (toc_id) REFERENCES dbo.dim_toc(toc_id),
+        CONSTRAINT FK_fact_alert_dim_class
+            FOREIGN KEY (class_id) REFERENCES dbo.dim_class(class_id),
+        CONSTRAINT FK_fact_alert_dim_depot
+            FOREIGN KEY (depot_id) REFERENCES dbo.dim_depot(depot_id),
         CONSTRAINT CHK_fact_alert_source
             CHECK (alert_source IN ('instrumentel', 'pb_event'))
     );
@@ -327,6 +336,39 @@ IF NOT EXISTS (
 BEGIN
     CREATE NONCLUSTERED INDEX IX_fact_alert_trace_ref_id
     ON dbo.fact_alert (trace_ref_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_fact_alert_toc_id'
+      AND object_id = OBJECT_ID('dbo.fact_alert')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_fact_alert_toc_id
+    ON dbo.fact_alert (toc_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_fact_alert_class_id'
+      AND object_id = OBJECT_ID('dbo.fact_alert')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_fact_alert_class_id
+    ON dbo.fact_alert (class_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_fact_alert_depot_id'
+      AND object_id = OBJECT_ID('dbo.fact_alert')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_fact_alert_depot_id
+    ON dbo.fact_alert (depot_id);
 END;
 
 
