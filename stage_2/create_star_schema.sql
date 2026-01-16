@@ -243,6 +243,7 @@ IF OBJECT_ID('dbo.fact_alert', 'U') IS NULL
 BEGIN
     CREATE TABLE dbo.fact_alert (
         alert_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_alert PRIMARY KEY,
+        source_alert_id NVARCHAR(100) NULL,
         title NVARCHAR(200) NULL,
         alert_timestamp DATETIME2 NULL,
         status_id INT NULL,
@@ -337,6 +338,17 @@ IF NOT EXISTS (
 BEGIN
     CREATE NONCLUSTERED INDEX IX_fact_alert_trace_ref_id
     ON dbo.fact_alert (trace_ref_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_fact_alert_source_alert_id'
+      AND object_id = OBJECT_ID('dbo.fact_alert')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_fact_alert_source_alert_id
+    ON dbo.fact_alert (source_alert_id);
 END;
 
 IF NOT EXISTS (
