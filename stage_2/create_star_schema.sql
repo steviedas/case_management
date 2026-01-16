@@ -207,11 +207,7 @@ BEGIN
         storage_path NVARCHAR(850) NOT NULL,
         file_format NVARCHAR(50) NULL,
         date_created DATETIME2 NOT NULL DEFAULT GETDATE(),
-        date_updated DATETIME2 NOT NULL DEFAULT GETDATE(),
-        trace_start_time DATETIME2 NULL,
-        trace_end_time DATETIME2 NULL,
-        signal_count INT NULL,
-        row_count INT NULL
+        date_updated DATETIME2 NOT NULL DEFAULT GETDATE()
     );
 END;
 
