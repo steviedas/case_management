@@ -7,6 +7,7 @@ EXEC sp_populate_dim_depot;
 EXEC sp_populate_dim_class;
 EXEC sp_populate_dim_delphi_unit;
 EXEC sp_populate_dim_alert_status;
+EXEC sp_populate_dim_record_type;
 
 -- Step 2: Populate dim_vehicle (depends on dim_delphi_unit)
 EXEC sp_populate_dim_vehicle;
@@ -22,7 +23,7 @@ EXEC sp_populate_fact_alert;
 -- Step 5: Populate fact_case (depends on dim_priority, dim_status, dim_system, dim_toc, dim_class, dim_depot, dim_vehicle)
 EXEC sp_populate_fact_case;
 
--- Step 6: Populate fact_record (depends on fact_case)
+-- Step 6: Populate fact_record (depends on fact_case, dim_record_type)
 EXEC sp_populate_fact_record;
 
 -- Step 7: Populate bridge tables (all depend on fact_case)

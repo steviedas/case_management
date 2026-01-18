@@ -4,6 +4,71 @@ BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;
 
+    -- Create performance indexes on staging tables if they don't exist
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.Alerts') AND name = 'IX_Alerts_SourceAlertId_Covering')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_Alerts_SourceAlertId_Covering
+        ON dbo.Alerts (source_alert_id)
+        INCLUDE (alert_source, alert_name, alert_timestamp, date_created, vehicle, alert_status, p_date);
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.AlertTraceReference') AND name = 'IX_AlertTraceReference_VehicleAlertDate')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_AlertTraceReference_VehicleAlertDate
+        ON dbo.AlertTraceReference (vehicle, alert_name, trace_date)
+        INCLUDE (storage_path);
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.RakeHistory') AND name = 'IX_RakeHistory_Vehicle')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_RakeHistory_Vehicle
+        ON dbo.RakeHistory (Vehicle)
+        INCLUDE (TOC, Vehicle_Class, R2_Depot);
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.fact_alert_trace_reference') AND name = 'IX_FactAlertTraceReference_StoragePath')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_FactAlertTraceReference_StoragePath
+        ON dbo.fact_alert_trace_reference (storage_path)
+        INCLUDE (id);
+    END
+
+    -- Indexes on dimension tables for join performance
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.dim_vehicle') AND name = 'IX_DimVehicle_Vehicle')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_DimVehicle_Vehicle
+        ON dbo.dim_vehicle (vehicle)
+        INCLUDE (vehicle_id);
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.dim_alert_status') AND name = 'IX_DimAlertStatus_StatusName')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_DimAlertStatus_StatusName
+        ON dbo.dim_alert_status (alert_status_name)
+        INCLUDE (alert_status_id);
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.dim_toc') AND name = 'IX_DimToc_TocName')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_DimToc_TocName
+        ON dbo.dim_toc (toc_name)
+        INCLUDE (toc_id);
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.dim_class') AND name = 'IX_DimClass_ClassName')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_DimClass_ClassName
+        ON dbo.dim_class (class_name)
+        INCLUDE (class_id);
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE object_id = OBJECT_ID('dbo.dim_depot') AND name = 'IX_DimDepot_DepotName')
+    BEGIN
+        CREATE NONCLUSTERED INDEX IX_DimDepot_DepotName
+        ON dbo.dim_depot (depot_name)
+        INCLUDE (depot_id);
+    END
+
     IF OBJECT_ID('tempdb..#src_alert') IS NOT NULL
         DROP TABLE #src_alert;
 
@@ -107,7 +172,7 @@ BEGIN
         ON d.depot_name = LTRIM(RTRIM(rh.R2_Depot))
 
     WHERE a.source_alert_id IS NOT NULL
-        AND LTRIM(RTRIM(a.source_alert_id)) <> N'';
+        AND a.source_alert_id <> N'';
 
     BEGIN TRY
         BEGIN TRAN;

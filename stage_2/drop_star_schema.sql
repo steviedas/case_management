@@ -36,3 +36,6 @@ IF OBJECT_ID('dbo.dim_status', 'U') IS NOT NULL
 
 IF OBJECT_ID('dbo.dim_priority', 'U') IS NOT NULL
     DROP TABLE dbo.dim_priority;
+
+IF OBJECT_ID('dbo.dim_record_type', 'U') IS NOT NULL
+    DROP TABLE dbo.dim_record_type;

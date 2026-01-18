@@ -162,6 +162,27 @@ BEGIN
 END;
 
 
+-- dim_record_type
+IF OBJECT_ID('dbo.dim_record_type', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.dim_record_type (
+        record_type_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_dim_record_type PRIMARY KEY,
+        type NVARCHAR(50) NOT NULL
+    );
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_dim_record_type_type'
+      AND object_id = OBJECT_ID('dbo.dim_record_type')
+)
+BEGIN
+    CREATE UNIQUE NONCLUSTERED INDEX IX_dim_record_type_type
+    ON dbo.dim_record_type (type);
+END;
+
+
 -- dim_vehicle
 IF OBJECT_ID('dbo.dim_vehicle', 'U') IS NULL
 BEGIN
@@ -503,9 +524,11 @@ BEGIN
         record NVARCHAR(MAX) NULL,
         case_id INT NOT NULL,
         author NVARCHAR(100) NULL,
-        record_type NVARCHAR(50) NULL,
+        record_type_id INT NULL,
         CONSTRAINT FK_fact_record_fact_case
-            FOREIGN KEY (case_id) REFERENCES dbo.fact_case(case_id)
+            FOREIGN KEY (case_id) REFERENCES dbo.fact_case(case_id),
+        CONSTRAINT FK_fact_record_dim_record_type
+            FOREIGN KEY (record_type_id) REFERENCES dbo.dim_record_type(record_type_id)
     );
 END;
 
@@ -534,12 +557,12 @@ END;
 IF NOT EXISTS (
     SELECT 1
     FROM sys.indexes
-    WHERE name = 'IX_fact_record_record_type'
+    WHERE name = 'IX_fact_record_record_type_id'
       AND object_id = OBJECT_ID('dbo.fact_record')
 )
 BEGIN
-    CREATE NONCLUSTERED INDEX IX_fact_record_record_type
-    ON dbo.fact_record (record_type);
+    CREATE NONCLUSTERED INDEX IX_fact_record_record_type_id
+    ON dbo.fact_record (record_type_id);
 END;
 
 

@@ -89,9 +89,22 @@ BEGIN
             ELSE NULL
         END
 
-    -- Join to dim_system to get system_id (using Symptom field)
+    -- Map Symptom codes to dim_system to get system_id
+    -- A* codes = AIR SYSTEM → Brakes
+    -- D* codes = DIESEL ENGINE → Engine
+    -- L* codes = LUB.OIL/FUEL → Engine
+    -- Q* codes = COOLING/HYDROSTATICS → Cooling
+    -- T* codes = TRANSMISSION → Transmission
+    -- E*, M*, N*, Z*, OS codes = NULL (no clear match)
     LEFT JOIN dbo.dim_system AS sys
-        ON sys.system_name = LTRIM(RTRIM(rcm.Symptom))
+        ON sys.system_name = CASE
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'A%' THEN 'Brakes'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'D%' THEN 'Engine'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'L%' THEN 'Engine'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'Q%' THEN 'Cooling'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'T%' THEN 'Transmission'
+            ELSE NULL
+        END
 
     -- Join to dim_toc to get toc_id
     LEFT JOIN dbo.dim_toc AS toc

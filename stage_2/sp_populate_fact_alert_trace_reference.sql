@@ -9,7 +9,8 @@ BEGIN
 
     CREATE TABLE #src_trace_ref
     (
-        storage_path NVARCHAR(850) NOT NULL PRIMARY KEY,
+        temp_id INT IDENTITY(1,1) PRIMARY KEY,
+        storage_path NVARCHAR(850) NOT NULL UNIQUE,
         file_format NVARCHAR(50) NULL,
         date_created DATETIME2 NOT NULL,
         date_updated DATETIME2 NOT NULL,
