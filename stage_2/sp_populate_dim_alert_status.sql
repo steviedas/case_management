@@ -16,7 +16,7 @@ BEGIN
     );
 
     INSERT INTO #src_alert_status (alert_status_name)
-    VALUES (N'Accepted'), (N'Rejected');
+    VALUES (N'Accepted'), (N'Rejected'), (N'Pending');
 
     BEGIN TRY
         BEGIN TRAN;

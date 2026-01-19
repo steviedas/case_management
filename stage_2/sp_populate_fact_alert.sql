@@ -137,11 +137,11 @@ BEGIN
 
     -- Map alert_status values and join to dim_alert_status to get status_id
     -- dbo.Alerts has: 'open', 'closed'
-    -- dim_alert_status has: 'Accepted', 'Rejected'
+    -- dim_alert_status has: 'Pending', 'Accepted', 'Rejected'
     LEFT JOIN dbo.dim_alert_status AS ast
         ON ast.alert_status_name = CASE LOWER(LTRIM(RTRIM(a.alert_status)))
-            WHEN 'open' THEN 'Accepted'      -- Map open to Accepted (adjust as needed)
-            WHEN 'closed' THEN 'Accepted'    -- Map closed to Accepted (adjust as needed)
+            WHEN 'Open' THEN 'Pending'       -- Map open to Pending (awaiting review)
+            WHEN 'Closed' THEN 'Accepted'    -- Map closed to Accepted (resolved)
             ELSE NULL
         END
 
