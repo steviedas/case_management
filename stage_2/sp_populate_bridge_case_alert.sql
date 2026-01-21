@@ -21,7 +21,7 @@ BEGIN
     -- Populate bridge table by matching alerts to cases
     -- Business logic: Link alerts to cases based on:
     --   1. Same vehicle
-    --   2. Alert timestamp within case date range (or close proximity)
+    --   2. Alert timestamp within 7 days before case was raised
     --   3. Matching system (optional)
     -- This creates automatic case-alert associations
 
@@ -36,7 +36,7 @@ BEGIN
     FROM dbo.fact_case AS fc
     INNER JOIN dbo.fact_alert AS fa
         ON fa.vehicle_id = fc.vehicle_id
-    WHERE fa.alert_timestamp BETWEEN DATEADD(DAY, -7, fc.created_at) AND DATEADD(DAY, 7, fc.created_at)
+    WHERE fa.alert_timestamp BETWEEN DATEADD(DAY, -7, fc.created_at) AND fc.created_at
       AND fa.alert_id IS NOT NULL
       AND fc.case_id IS NOT NULL;
 
