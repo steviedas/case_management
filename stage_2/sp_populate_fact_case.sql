@@ -24,6 +24,8 @@ BEGIN
         class_id INT NULL,
         depot_id INT NULL,
         vehicle_id INT NULL,
+        delay_prevented FLOAT NULL,
+        labour_hours FLOAT NULL,
         row_hash AS CONVERT(VARBINARY(32),
             HASHBYTES('SHA2_256',
                 CAST(source_case_id AS NVARCHAR(10)) + N'|' +
@@ -52,7 +54,9 @@ BEGIN
         toc_id,
         class_id,
         depot_id,
-        vehicle_id
+        vehicle_id,
+        delay_prevented,
+        labour_hours
     )
     SELECT
         rcm.Case_ID AS source_case_id,
@@ -69,7 +73,9 @@ BEGIN
         toc.toc_id,
         c.class_id,
         d.depot_id,
-        v.vehicle_id
+        v.vehicle_id,
+        NULL AS delay_prevented,
+        NULL AS labour_hours
     FROM dbo.RCMCaseManagement AS rcm
 
     -- Join to dim_priority to get priority_id
@@ -168,7 +174,9 @@ BEGIN
             tgt.toc_id = src.toc_id,
             tgt.class_id = src.class_id,
             tgt.depot_id = src.depot_id,
-            tgt.vehicle_id = src.vehicle_id
+            tgt.vehicle_id = src.vehicle_id,
+            tgt.delay_prevented = src.delay_prevented,
+            tgt.labour_hours = src.labour_hours
 
         WHEN NOT MATCHED BY TARGET
         THEN INSERT (
@@ -185,7 +193,9 @@ BEGIN
             toc_id,
             class_id,
             depot_id,
-            vehicle_id
+            vehicle_id,
+            delay_prevented,
+            labour_hours
         )
         VALUES (
             src.priority_id,
@@ -201,7 +211,9 @@ BEGIN
             src.toc_id,
             src.class_id,
             src.depot_id,
-            src.vehicle_id
+            src.vehicle_id,
+            src.delay_prevented,
+            src.labour_hours
         )
 
         WHEN NOT MATCHED BY SOURCE
