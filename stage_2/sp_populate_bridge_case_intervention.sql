@@ -14,23 +14,43 @@ BEGIN
         PRIMARY KEY (case_id, master_intervention_key)
     );
 
-    -- Parse Associated_Intervention_IDs from RCMCaseManagement
-    -- Assuming comma-separated values in Associated_Intervention_IDs field (e.g., "WR3741442,WR3741443")
+    -- Parse linked_work_orders from fact_case
+    -- Assuming comma-separated values in linked_work_orders field (e.g., "WR3741442,WR3741443")
     -- Match against fact_interventions.master_intervention_key format: "Maintenance-CHILT-WR3741442-20240718"
-    -- Extract WR number from Associated_Intervention_IDs and match with third segment of master_intervention_key
+    -- Extract WR number from linked_work_orders and match with third segment of master_intervention_key
     INSERT INTO #src_bridge (case_id, master_intervention_key)
     SELECT DISTINCT
         fc.case_id,
-        fi.master_intervention_key
-    FROM dbo.RCMCaseManagement AS rcm
-    INNER JOIN dbo.fact_case AS fc
-        ON fc.case_id = rcm.Case_ID
-    CROSS APPLY STRING_SPLIT(rcm.Associated_Intervention_IDs, ',') AS intervention
+        fi.master_intervention_key AS intervention_key
+    FROM dbo.fact_case AS fc
+    CROSS APPLY STRING_SPLIT(fc.linked_work_orders, ',') AS intervention
     INNER JOIN dbo.fact_interventions AS fi
         ON fi.master_intervention_key LIKE '%-%-' + LTRIM(RTRIM(intervention.value)) + '-%'
-    WHERE rcm.Associated_Intervention_IDs IS NOT NULL
-      AND LTRIM(RTRIM(rcm.Associated_Intervention_IDs)) <> N''
-      AND LTRIM(RTRIM(intervention.value)) <> N'';
+    WHERE fc.linked_work_orders IS NOT NULL
+        AND LTRIM(RTRIM(fc.linked_work_orders)) <> N''
+        AND LTRIM(RTRIM(intervention.value)) <> N'';
+
+    -- Parse RFS field from fact_case
+    -- RFS field contains comma-separated values like "RFS-3312, RFS-4581" or "RFS00142"
+    -- Strip "RFS-" or "RFS" prefix and join to UnifiedIntervention.Intervention_ID
+    -- Use Intervention_Key from UnifiedIntervention as master_intervention_key
+    INSERT INTO #src_bridge (case_id, master_intervention_key)
+    SELECT DISTINCT
+        fc.case_id,
+        ui.Intervention_Key as intervention_key
+    FROM dbo.fact_case AS fc
+    CROSS APPLY STRING_SPLIT(fc.rfs, ',') AS rfs_value
+    INNER JOIN dbo.UnifiedInterventions AS ui
+        ON ui.Intervention_ID = CASE
+            WHEN LTRIM(RTRIM(rfs_value.value)) LIKE 'RFS-%'
+                THEN STUFF(LTRIM(RTRIM(rfs_value.value)), 1, 4, '')
+            WHEN LTRIM(RTRIM(rfs_value.value)) LIKE 'RFS%'
+                THEN STUFF(LTRIM(RTRIM(rfs_value.value)), 1, 3, '')
+            ELSE LTRIM(RTRIM(rfs_value.value))
+        END
+    WHERE fc.rfs IS NOT NULL
+        AND LTRIM(RTRIM(fc.rfs)) <> N''
+        AND LTRIM(RTRIM(rfs_value.value)) <> N'';
 
     BEGIN TRY
         BEGIN TRAN;
