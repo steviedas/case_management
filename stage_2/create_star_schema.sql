@@ -421,6 +421,7 @@ BEGIN
         vehicle_id INT NULL,
         delay_prevented FLOAT NULL,
         labour_hours FLOAT NULL,
+        rejection_reason NVARCHAR(MAX) NULL,
         CONSTRAINT FK_fact_case_dim_priority
             FOREIGN KEY (priority_id) REFERENCES dbo.dim_priority(priority_id),
         CONSTRAINT FK_fact_case_dim_status
