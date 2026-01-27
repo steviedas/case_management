@@ -16,7 +16,7 @@ BEGIN
     );
 
     INSERT INTO #src_record_type (type)
-    VALUES (N'description'), (N'update'), (N'note');
+    VALUES (N'description'), (N'update'), (N'note'), (N'Turbo Clean'), (N'Raft Change');
 
     BEGIN TRY
         BEGIN TRAN;
