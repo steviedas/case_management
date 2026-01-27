@@ -183,6 +183,40 @@ BEGIN
 END;
 
 
+-- dim_code
+IF OBJECT_ID('dbo.dim_code', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.dim_code (
+        code_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_dim_code PRIMARY KEY,
+        code_type VARCHAR(10) NOT NULL,
+        code_short VARCHAR(10) NOT NULL,
+        code_long VARCHAR(60) NOT NULL
+    );
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_dim_code_code_type_code_short'
+      AND object_id = OBJECT_ID('dbo.dim_code')
+)
+BEGIN
+    CREATE UNIQUE NONCLUSTERED INDEX IX_dim_code_code_type_code_short
+    ON dbo.dim_code (code_type, code_short);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_dim_code_code_type'
+      AND object_id = OBJECT_ID('dbo.dim_code')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_dim_code_code_type
+    ON dbo.dim_code (code_type);
+END;
+
+
 -- dim_vehicle
 IF OBJECT_ID('dbo.dim_vehicle', 'U') IS NULL
 BEGIN
@@ -422,6 +456,8 @@ BEGIN
         delay_prevented FLOAT NULL,
         labour_hours FLOAT NULL,
         rejection_reason NVARCHAR(MAX) NULL,
+        symptom_code_id INT NULL,
+        root_code_id INT NULL,
         CONSTRAINT FK_fact_case_dim_priority
             FOREIGN KEY (priority_id) REFERENCES dbo.dim_priority(priority_id),
         CONSTRAINT FK_fact_case_dim_status
@@ -435,7 +471,11 @@ BEGIN
         CONSTRAINT FK_fact_case_dim_depot
             FOREIGN KEY (depot_id) REFERENCES dbo.dim_depot(depot_id),
         CONSTRAINT FK_fact_case_dim_vehicle
-            FOREIGN KEY (vehicle_id) REFERENCES dbo.dim_vehicle(vehicle_id)
+            FOREIGN KEY (vehicle_id) REFERENCES dbo.dim_vehicle(vehicle_id),
+        CONSTRAINT FK_fact_case_dim_code_symptom
+            FOREIGN KEY (symptom_code_id) REFERENCES dbo.dim_code(code_id),
+        CONSTRAINT FK_fact_case_dim_code_root
+            FOREIGN KEY (root_code_id) REFERENCES dbo.dim_code(code_id)
     );
 END;
 
@@ -514,6 +554,28 @@ IF NOT EXISTS (
 BEGIN
     CREATE NONCLUSTERED INDEX IX_fact_case_vehicle_id
     ON dbo.fact_case (vehicle_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_fact_case_symptom_code_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_fact_case_symptom_code_id
+    ON dbo.fact_case (symptom_code_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_fact_case_root_code_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_fact_case_root_code_id
+    ON dbo.fact_case (root_code_id);
 END;
 
 
