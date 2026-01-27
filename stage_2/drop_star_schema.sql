@@ -28,6 +28,15 @@ IF OBJECT_ID('dbo.dim_alert_status', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.dim_delphi_unit', 'U') IS NOT NULL
     DROP TABLE dbo.dim_delphi_unit;
 
+IF OBJECT_ID('dbo.dim_toc', 'U') IS NOT NULL
+    DROP TABLE dbo.dim_toc;
+
+IF OBJECT_ID('dbo.dim_class', 'U') IS NOT NULL
+    DROP TABLE dbo.dim_class;
+
+IF OBJECT_ID('dbo.dim_depot', 'U') IS NOT NULL
+    DROP TABLE dbo.dim_depot;
+
 IF OBJECT_ID('dbo.dim_system', 'U') IS NOT NULL
     DROP TABLE dbo.dim_system;
 
@@ -39,3 +48,6 @@ IF OBJECT_ID('dbo.dim_priority', 'U') IS NOT NULL
 
 IF OBJECT_ID('dbo.dim_record_type', 'U') IS NOT NULL
     DROP TABLE dbo.dim_record_type;
+
+IF OBJECT_ID('dbo.dim_code', 'U') IS NOT NULL
+    DROP TABLE dbo.dim_code;
