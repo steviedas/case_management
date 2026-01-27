@@ -16,7 +16,7 @@ BEGIN
     );
 
     INSERT INTO #src_priority (priority_name)
-    VALUES (N'Critical'), (N'High'), (N'Medium'), (N'Low'), (N'Very Low');
+    VALUES (N'Attend at next exam'), (N'Attend at next depot visit'), (N'As soon as possible');
 
     BEGIN TRY
         BEGIN TRAN;

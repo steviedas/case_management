@@ -78,16 +78,24 @@ BEGIN
         NULL AS labour_hours
     FROM dbo.RCMCaseManagement AS rcm
 
-    -- Join to dim_priority to get priority_id
+    -- Map priority values and join to dim_priority to get priority_id
+    -- RCMCaseManagement has: NULL, 'High', 'Medium', 'Low'
+    -- dim_priority has: 'Attend at next exam', 'Attend at next depot visit', 'As soon as possible'
     LEFT JOIN dbo.dim_priority AS p
-        ON p.priority_name = LTRIM(RTRIM(rcm.Priority))
+        ON p.priority_name = CASE
+            WHEN rcm.Priority IS NULL THEN NULL
+            WHEN LOWER(LTRIM(RTRIM(rcm.Priority))) = 'High' THEN 'As soon as possible'
+            WHEN LOWER(LTRIM(RTRIM(rcm.Priority))) = 'Medium' THEN 'Attend at next depot visit'
+            WHEN LOWER(LTRIM(RTRIM(rcm.Priority))) = 'Low' THEN 'Attend at next exam'
+            ELSE NULL
+        END
 
     -- Map status values and join to dim_status to get status_id
     -- RCMCaseManagement has: NULL, 'Completed', 'Monitored, NFF', 'Open', 'Re-opened'
-    -- dim_status has: 'Completed', 'Open', 'Rejected'
+    -- dim_status has: 'Proposed', 'Completed', 'Rejected', 'Attend at next exam', 'Attend at next depot visit', 'As soon as possible'
     LEFT JOIN dbo.dim_status AS s
         ON s.status_name = CASE
-            WHEN rcm.Status IS NULL THEN 'Open'
+            WHEN rcm.Status IS NULL THEN 'Proposed'
             WHEN LOWER(LTRIM(RTRIM(rcm.Status))) = 'completed' THEN 'Completed'
             WHEN LOWER(LTRIM(RTRIM(rcm.Status))) = 'monitored, nff' THEN 'Completed'
             WHEN LOWER(LTRIM(RTRIM(rcm.Status))) = 'open' THEN 'Open'
