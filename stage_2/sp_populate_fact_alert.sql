@@ -82,6 +82,7 @@ BEGIN
         date_reviewed DATETIME2 NULL,
         reviewed_by NVARCHAR(100) NULL,
         rejection_reason NVARCHAR(MAX) NULL,
+        alert_value FLOAT NULL,
         vehicle_id INT NULL,
         trace_ref_id INT NULL,
         alert_source NVARCHAR(100) NOT NULL,
@@ -94,6 +95,7 @@ BEGIN
                 COALESCE(title, N'') + N'|' +
                 COALESCE(CONVERT(NVARCHAR(30), alert_timestamp, 121), N'') + N'|' +
                 COALESCE(CAST(status_id AS NVARCHAR(10)), N'') + N'|' +
+                COALESCE(CAST(alert_value AS NVARCHAR(50)), N'') + N'|' +
                 COALESCE(CAST(vehicle_id AS NVARCHAR(10)), N'') + N'|' +
                 COALESCE(CAST(trace_ref_id AS NVARCHAR(10)), N'') + N'|' +
                 COALESCE(alert_source, N'')
@@ -111,6 +113,7 @@ BEGIN
         date_reviewed,
         reviewed_by,
         rejection_reason,
+        alert_value,
         vehicle_id,
         trace_ref_id,
         alert_source,
@@ -127,6 +130,7 @@ BEGIN
         NULL AS date_reviewed,
         NULL AS reviewed_by,
         NULL AS rejection_reason,
+        a.alert_value,
         v.vehicle_id,
         tr.id AS trace_ref_id,
         a.alert_source,
@@ -187,6 +191,7 @@ BEGIN
                         COALESCE(fa.title, N'') + N'|' +
                         COALESCE(CONVERT(NVARCHAR(30), fa.alert_timestamp, 121), N'') + N'|' +
                         COALESCE(CAST(fa.status_id AS NVARCHAR(10)), N'') + N'|' +
+                        COALESCE(CAST(fa.alert_value AS NVARCHAR(50)), N'') + N'|' +
                         COALESCE(CAST(fa.vehicle_id AS NVARCHAR(10)), N'') + N'|' +
                         COALESCE(CAST(fa.trace_ref_id AS NVARCHAR(10)), N'') + N'|' +
                         COALESCE(fa.alert_source, N'')
@@ -206,6 +211,7 @@ BEGIN
             tgt.alert_timestamp = src.alert_timestamp,
             tgt.status_id = src.status_id,
             tgt.date_created = src.date_created,
+            tgt.alert_value = src.alert_value,
             tgt.vehicle_id = src.vehicle_id,
             tgt.trace_ref_id = src.trace_ref_id,
             tgt.alert_source = src.alert_source,
@@ -223,6 +229,7 @@ BEGIN
             date_reviewed,
             reviewed_by,
             rejection_reason,
+            alert_value,
             vehicle_id,
             trace_ref_id,
             alert_source,
@@ -239,6 +246,7 @@ BEGIN
             src.date_reviewed,
             src.reviewed_by,
             src.rejection_reason,
+            src.alert_value,
             src.vehicle_id,
             src.trace_ref_id,
             src.alert_source,
