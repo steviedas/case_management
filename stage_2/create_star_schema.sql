@@ -302,6 +302,7 @@ BEGIN
         date_reviewed DATETIME2 NULL,
         reviewed_by NVARCHAR(100) NULL,
         rejection_reason NVARCHAR(MAX) NULL,
+        alert_value FLOAT NULL,
         vehicle_id INT NULL,
         trace_ref_id INT NULL,
         alert_source NVARCHAR(100) NOT NULL,
@@ -455,7 +456,6 @@ BEGIN
         vehicle_id INT NULL,
         delay_prevented FLOAT NULL,
         labour_hours FLOAT NULL,
-        rejection_reason NVARCHAR(MAX) NULL,
         symptom_code_id INT NULL,
         root_code_id INT NULL,
         CONSTRAINT FK_fact_case_dim_priority
