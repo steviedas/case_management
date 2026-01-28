@@ -32,25 +32,28 @@ BEGIN
 
     -- Parse RFS field from fact_case
     -- RFS field contains comma-separated values like "RFS-3312, RFS-4581" or "RFS00142"
-    -- Strip "RFS-" or "RFS" prefix and join to UnifiedIntervention.Intervention_ID
-    -- Use Intervention_Key from UnifiedIntervention as master_intervention_key
-    INSERT INTO #src_bridge (case_id, master_intervention_key)
-    SELECT DISTINCT
-        fc.case_id,
-        ui.Intervention_Key as intervention_key
-    FROM dbo.fact_case AS fc
-    CROSS APPLY STRING_SPLIT(fc.rfs, ',') AS rfs_value
-    INNER JOIN dbo.UnifiedInterventions AS ui
-        ON ui.Intervention_ID = CASE
-            WHEN LTRIM(RTRIM(rfs_value.value)) LIKE 'RFS-%'
-                THEN STUFF(LTRIM(RTRIM(rfs_value.value)), 1, 4, '')
-            WHEN LTRIM(RTRIM(rfs_value.value)) LIKE 'RFS%'
-                THEN STUFF(LTRIM(RTRIM(rfs_value.value)), 1, 3, '')
-            ELSE LTRIM(RTRIM(rfs_value.value))
-        END
-    WHERE fc.rfs IS NOT NULL
-        AND LTRIM(RTRIM(fc.rfs)) <> N''
-        AND LTRIM(RTRIM(rfs_value.value)) <> N'';
+    -- Strip "RFS-" or "RFS" prefix and search in intervention_key column
+    -- intervention_key contains multiple keys separated by "***"
+    -- Match to "Third Party Maintenance-" keys in the intervention_key column
+    -- Example: "RFS-00303046" should match a row where intervention_key contains "Third Party Maintenance-SRT-00303046-20241205"
+    -- INSERT INTO #src_bridge (case_id, master_intervention_key)
+    -- SELECT DISTINCT
+    --     fc.case_id,
+    --     fi.master_intervention_key
+    -- FROM dbo.fact_case AS fc
+    -- CROSS APPLY STRING_SPLIT(fc.rfs, ',') AS rfs_value
+    -- INNER JOIN dbo.fact_interventions AS fi
+    --     ON fi.intervention_key LIKE '%Third Party Maintenance-%-' +
+    --         CASE
+    --             WHEN LTRIM(RTRIM(rfs_value.value)) LIKE 'RFS-%'
+    --                 THEN STUFF(LTRIM(RTRIM(rfs_value.value)), 1, 4, '')
+    --             WHEN LTRIM(RTRIM(rfs_value.value)) LIKE 'RFS%'
+    --                 THEN STUFF(LTRIM(RTRIM(rfs_value.value)), 1, 3, '')
+    --             ELSE LTRIM(RTRIM(rfs_value.value))
+    --         END + '-%'
+    -- WHERE fc.rfs IS NOT NULL
+    --     AND LTRIM(RTRIM(fc.rfs)) <> N''
+    --     AND LTRIM(RTRIM(rfs_value.value)) <> N'';
 
     BEGIN TRY
         BEGIN TRAN;
