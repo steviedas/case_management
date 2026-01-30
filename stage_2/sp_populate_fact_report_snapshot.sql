@@ -40,19 +40,36 @@ BEGIN
     )
     SELECT DISTINCT
         fr.report_id,
-        LTRIM(RTRIM(rs.title)) AS title,
+        ct.clean_title AS title,
         rs.date_created,
         rs.start_time,
         rs.end_time,
         rs.date_updated
-    FROM dbo.FactReportSnapshot AS rs
+    FROM dbo.ReportSnapshot AS rs
+    OUTER APPLY (
+        SELECT LTRIM(RTRIM(rs.title)) AS clean_title
+    ) AS ct
     OUTER APPLY (
         SELECT
             CASE
-                WHEN CHARINDEX(N' w/c ', LTRIM(RTRIM(rs.title))) > 0
-                    THEN LEFT(LTRIM(RTRIM(rs.title)),
-                              CHARINDEX(N' w/c ', LTRIM(RTRIM(rs.title))) - 1)
-                ELSE LTRIM(RTRIM(rs.title))
+                WHEN CHARINDEX(N'_to_', ct.clean_title) > 0
+                    THEN LEFT(ct.clean_title, CHARINDEX(N'_to_', ct.clean_title) - 1)
+                ELSE NULL
+            END AS pre_range
+    ) AS pr
+    OUTER APPLY (
+        SELECT
+            CASE
+                WHEN CHARINDEX(N' w/c ', ct.clean_title) > 0
+                    THEN LEFT(ct.clean_title,
+                              CHARINDEX(N' w/c ', ct.clean_title) - 1)
+                WHEN CHARINDEX(N'_to_', ct.clean_title) > 0
+                    THEN CASE
+                        WHEN LEN(pr.pre_range) > 11
+                            THEN LEFT(pr.pre_range, LEN(pr.pre_range) - 11)
+                        ELSE pr.pre_range
+                    END
+                ELSE ct.clean_title
             END AS base_title
     ) AS bt
     INNER JOIN dbo.fact_report AS fr

@@ -48,7 +48,7 @@ BEGIN
         date_created,
         date_updated,
         NULLIF(LTRIM(RTRIM(partitioned_by)), N'') AS partitioned_by
-    FROM dbo.FactReport
+    FROM dbo.Report
     WHERE title IS NOT NULL
       AND LTRIM(RTRIM(title)) <> N'';
 
