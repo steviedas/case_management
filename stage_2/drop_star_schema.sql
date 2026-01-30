@@ -10,6 +10,12 @@ IF OBJECT_ID('dbo.bridge_case_intervention', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.fact_record', 'U') IS NOT NULL
     DROP TABLE dbo.fact_record;
 
+IF OBJECT_ID('dbo.fact_report_snapshot', 'U') IS NOT NULL
+    DROP TABLE dbo.fact_report_snapshot;
+
+IF OBJECT_ID('dbo.fact_report', 'U') IS NOT NULL
+    DROP TABLE dbo.fact_report;
+
 IF OBJECT_ID('dbo.fact_alert', 'U') IS NOT NULL
     DROP TABLE dbo.fact_alert;
 

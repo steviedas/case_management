@@ -17,6 +17,14 @@ EXEC sp_populate_dim_vehicle;
 -- Source: dbo.staging_alert_trace_reference (populated from Databricks)
 EXEC sp_populate_fact_alert_trace_reference;
 
+-- Step 3b: Populate fact_report (no FK dependencies)
+-- Source: dbo.Report (populated from Databricks)
+EXEC sp_populate_fact_report;
+
+-- Step 3c: Populate fact_report_snapshot (depends on fact_report)
+-- Source: dbo.ReportSnapshot (populated from Databricks)
+EXEC sp_populate_fact_report_snapshot;
+
 -- Step 4: Populate fact_alert (depends on dim_alert_status, dim_vehicle, fact_alert_trace_reference, dim_toc, dim_class, dim_depot)
 -- Source: dbo.Alerts (populated from Databricks)
 EXEC sp_populate_fact_alert;

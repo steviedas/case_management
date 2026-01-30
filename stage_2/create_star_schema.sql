@@ -631,6 +631,39 @@ BEGIN
 END;
 
 
+-- fact_report
+IF OBJECT_ID('dbo.fact_report', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.fact_report (
+        report_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_report PRIMARY KEY,
+        title NVARCHAR(255) NOT NULL,
+        description NVARCHAR(500) NULL,
+        report_frequency NVARCHAR(50) NOT NULL,
+        storage_path NVARCHAR(850) NOT NULL,
+        date_created DATETIME2 NOT NULL,
+        date_updated DATETIME2 NOT NULL,
+        partitioned_by NVARCHAR(255) NULL
+    );
+END;
+
+
+-- fact_report_snapshot
+IF OBJECT_ID('dbo.fact_report_snapshot', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.fact_report_snapshot (
+        snapshot_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_report_snapshot PRIMARY KEY,
+        report_id INT NOT NULL,
+        title NVARCHAR(255) NOT NULL,
+        date_created DATETIME2 NOT NULL,
+        start_time DATETIME2 NOT NULL,
+        end_time DATETIME2 NOT NULL,
+        date_updated DATETIME2 NOT NULL,
+        CONSTRAINT FK_fact_report_snapshot_fact_report
+            FOREIGN KEY (report_id) REFERENCES dbo.fact_report(report_id)
+    );
+END;
+
+
 -- bridge_case_intervention
 IF OBJECT_ID('dbo.bridge_case_intervention', 'U') IS NULL
 BEGIN
