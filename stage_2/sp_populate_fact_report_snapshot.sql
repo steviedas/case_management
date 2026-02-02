@@ -126,10 +126,7 @@ BEGIN
             src.start_time,
             src.end_time,
             src.date_updated
-        )
-
-        WHEN NOT MATCHED BY SOURCE
-        THEN DELETE;
+        );
 
         COMMIT;
     END TRY
