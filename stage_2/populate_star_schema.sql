@@ -25,12 +25,19 @@ EXEC sp_populate_fact_report;
 -- Source: dbo.ReportSnapshot (populated from Databricks)
 EXEC sp_populate_fact_report_snapshot;
 
+-- Step 3d: Populate dim_report_snapshot_row (depends on fact_report_snapshot)
+-- Source: dbo.ReportSnapshotRow (populated from Databricks)
+EXEC sp_populate_dim_report_snapshot_row;
+
 -- Step 4: Populate fact_alert (depends on dim_alert_status, dim_vehicle, fact_alert_trace_reference, dim_toc, dim_class, dim_depot)
 -- Source: dbo.Alerts (populated from Databricks)
 EXEC sp_populate_fact_alert;
 
 -- Step 5: Populate fact_case (depends on dim_priority, dim_status, dim_system, dim_toc, dim_class, dim_depot, dim_vehicle, dim_code)
 EXEC sp_populate_fact_case;
+
+-- Step 5b: Populate fact_case from reports (depends on dim_report_snapshot_row)
+EXEC sp_populate_fact_case_from_reports;
 
 -- Step 6: Populate fact_record (depends on fact_case, dim_record_type)
 EXEC sp_populate_fact_record;

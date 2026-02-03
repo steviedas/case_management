@@ -104,19 +104,31 @@ BEGIN
         END
 
     -- Map Symptom codes to dim_system to get system_id
-    -- A* codes = AIR SYSTEM → Brakes
-    -- D* codes = DIESEL ENGINE → Engine
-    -- L* codes = LUB.OIL/FUEL → Engine
-    -- Q* codes = COOLING/HYDROSTATICS → Cooling
-    -- T* codes = TRANSMISSION → Transmission
-    -- E*, M*, N*, Z*, OS codes = NULL (no clear match)
+    -- Target systems: Hydrostatics, Air, Engine, Transmission
     LEFT JOIN dbo.dim_system AS sys
         ON sys.system_name = CASE
-            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'A%' THEN 'Brakes'
+            WHEN UPPER(LTRIM(RTRIM(rcm.Symptom))) IN (
+                'AIR LEAK', 'AECB TRIP', 'COMP NOISY', 'CLOP', 'LOW AIR', 'SLOW AIR'
+            ) THEN 'Air'
+            WHEN UPPER(LTRIM(RTRIM(rcm.Symptom))) IN (
+                'COOL LEAK', 'COOL PRESS', 'EXC COOL', 'FANS RUN', 'HYDRO LEAK'
+            ) THEN 'Hydrostatics'
+            WHEN UPPER(LTRIM(RTRIM(rcm.Symptom))) IN (
+                'ADVERSE', 'CYL LEAK', 'ENG HUNT', 'ENG KNOCK', 'ENG NOISY',
+                'ENG RUN ON', 'ENG SMOKE', 'EXH SMOKE', 'EXHAUST', 'FUEL LEAK',
+                'HEAVY BRE', 'HIGH OIL', 'IFU FAULT', 'LOW IDLE', 'LOW OIL',
+                'LOW OIL P', 'OIL LEAK', 'TURBO', 'HIGH COOLANT TEMP'
+            ) THEN 'Engine'
+            WHEN UPPER(LTRIM(RTRIM(rcm.Symptom))) IN (
+                'TRANS FLT', 'TRANS LEAK'
+            ) THEN 'Transmission'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'A%' THEN 'Air'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'Q%' THEN 'Hydrostatics'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'T%' THEN 'Transmission'
             WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'D%' THEN 'Engine'
             WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'L%' THEN 'Engine'
-            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'Q%' THEN 'Cooling'
-            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'T%' THEN 'Transmission'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'E%' THEN 'Engine'
+            WHEN LTRIM(RTRIM(rcm.Symptom)) LIKE 'M%' THEN 'Engine'
             ELSE NULL
         END
 

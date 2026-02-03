@@ -434,6 +434,38 @@ BEGIN
     ON dbo.fact_alert (depot_id);
 END;
 
+-- fact_report
+IF OBJECT_ID('dbo.fact_report', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.fact_report (
+        report_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_report PRIMARY KEY,
+        title NVARCHAR(255) NOT NULL,
+        description NVARCHAR(500) NULL,
+        report_frequency NVARCHAR(50) NOT NULL,
+        storage_path NVARCHAR(850) NOT NULL,
+        date_created DATETIME2 NOT NULL,
+        date_updated DATETIME2 NOT NULL,
+        partitioned_by NVARCHAR(255) NULL
+    );
+END;
+
+
+-- fact_report_snapshot
+IF OBJECT_ID('dbo.fact_report_snapshot', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.fact_report_snapshot (
+        snapshot_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_report_snapshot PRIMARY KEY,
+        report_id INT NOT NULL,
+        title NVARCHAR(255) NOT NULL,
+        date_created DATETIME2 NOT NULL,
+        start_time DATETIME2 NOT NULL,
+        end_time DATETIME2 NOT NULL,
+        date_updated DATETIME2 NOT NULL,
+        CONSTRAINT FK_fact_report_snapshot_fact_report
+            FOREIGN KEY (report_id) REFERENCES dbo.fact_report(report_id)
+    );
+END;
+
 -- dim_report_snapshot_row
 IF OBJECT_ID('dbo.dim_report_snapshot_row', 'U') IS NULL
 BEGIN
@@ -628,7 +660,6 @@ BEGIN
     ON dbo.fact_case (root_code_id);
 END;
 
-
 -- fact_record
 IF OBJECT_ID('dbo.fact_record', 'U') IS NULL
 BEGIN
@@ -678,39 +709,6 @@ IF NOT EXISTS (
 BEGIN
     CREATE NONCLUSTERED INDEX IX_fact_record_record_type_id
     ON dbo.fact_record (record_type_id);
-END;
-
-
--- fact_report
-IF OBJECT_ID('dbo.fact_report', 'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.fact_report (
-        report_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_report PRIMARY KEY,
-        title NVARCHAR(255) NOT NULL,
-        description NVARCHAR(500) NULL,
-        report_frequency NVARCHAR(50) NOT NULL,
-        storage_path NVARCHAR(850) NOT NULL,
-        date_created DATETIME2 NOT NULL,
-        date_updated DATETIME2 NOT NULL,
-        partitioned_by NVARCHAR(255) NULL
-    );
-END;
-
-
--- fact_report_snapshot
-IF OBJECT_ID('dbo.fact_report_snapshot', 'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.fact_report_snapshot (
-        snapshot_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_fact_report_snapshot PRIMARY KEY,
-        report_id INT NOT NULL,
-        title NVARCHAR(255) NOT NULL,
-        date_created DATETIME2 NOT NULL,
-        start_time DATETIME2 NOT NULL,
-        end_time DATETIME2 NOT NULL,
-        date_updated DATETIME2 NOT NULL,
-        CONSTRAINT FK_fact_report_snapshot_fact_report
-            FOREIGN KEY (report_id) REFERENCES dbo.fact_report(report_id)
-    );
 END;
 
 

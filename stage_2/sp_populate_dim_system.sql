@@ -20,8 +20,8 @@ BEGIN
     VALUES
         (N'Engine'),
         (N'Transmission'),
-        (N'Brakes'),
-        (N'Cooling');
+        (N'Hydrostatics'),
+        (N'Air');
 
     BEGIN TRY
         BEGIN TRAN;
