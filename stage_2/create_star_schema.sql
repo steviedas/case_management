@@ -434,6 +434,42 @@ BEGIN
     ON dbo.fact_alert (depot_id);
 END;
 
+-- dim_report_snapshot_row
+IF OBJECT_ID('dbo.dim_report_snapshot_row', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.dim_report_snapshot_row (
+        report_snapshot_row_id INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_dim_report_snapshot_row PRIMARY KEY,
+        snapshot_id INT NOT NULL,
+        row_uid VARCHAR(64) NOT NULL,
+        report_date DATETIME2 NOT NULL,
+        CONSTRAINT FK_dim_report_snapshot_row_fact_report_snapshot
+            FOREIGN KEY (snapshot_id) REFERENCES dbo.fact_report_snapshot(snapshot_id),
+        CONSTRAINT UQ_dim_report_snapshot_row UNIQUE (snapshot_id, row_uid)
+    );
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_dim_report_snapshot_row_snapshot_id'
+      AND object_id = OBJECT_ID('dbo.dim_report_snapshot_row')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_dim_report_snapshot_row_snapshot_id
+    ON dbo.dim_report_snapshot_row (snapshot_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_dim_report_snapshot_row_row_uid'
+      AND object_id = OBJECT_ID('dbo.dim_report_snapshot_row')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_dim_report_snapshot_row_row_uid
+    ON dbo.dim_report_snapshot_row (row_uid);
+END;
+
 
 -- fact_case
 IF OBJECT_ID('dbo.fact_case', 'U') IS NULL
@@ -454,6 +490,7 @@ BEGIN
         class_id INT NULL,
         depot_id INT NULL,
         vehicle_id INT NULL,
+        report_snapshot_row_id INT NULL,
         delay_prevented FLOAT NULL,
         labour_hours FLOAT NULL,
         symptom_code_id INT NULL,
@@ -472,11 +509,24 @@ BEGIN
             FOREIGN KEY (depot_id) REFERENCES dbo.dim_depot(depot_id),
         CONSTRAINT FK_fact_case_dim_vehicle
             FOREIGN KEY (vehicle_id) REFERENCES dbo.dim_vehicle(vehicle_id),
+        CONSTRAINT FK_fact_case_dim_report_snapshot_row
+            FOREIGN KEY (report_snapshot_row_id) REFERENCES dbo.dim_report_snapshot_row(report_snapshot_row_id),
         CONSTRAINT FK_fact_case_dim_code_symptom
             FOREIGN KEY (symptom_code_id) REFERENCES dbo.dim_code(code_id),
         CONSTRAINT FK_fact_case_dim_code_root
             FOREIGN KEY (root_code_id) REFERENCES dbo.dim_code(code_id)
     );
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_fact_case_report_snapshot_row_id'
+      AND object_id = OBJECT_ID('dbo.fact_case')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_fact_case_report_snapshot_row_id
+    ON dbo.fact_case (report_snapshot_row_id);
 END;
 
 IF NOT EXISTS (
