@@ -26,21 +26,24 @@ BEGIN
     WHERE fc.vehicle_id IS NOT NULL
       AND v.unit_id IS NOT NULL;
 
-    -- Fallback: Link report-based cases to units via report snapshot rows
-    INSERT INTO #src_bridge (case_id, unit_id)
-    SELECT DISTINCT
-        fc.case_id,
-        du.unit_id
-    FROM dbo.fact_case AS fc
-    INNER JOIN dbo.dim_report_snapshot_row AS drsr
-        ON drsr.report_snapshot_row_id = fc.report_snapshot_row_id
-    INNER JOIN dbo.ReportSnapshotRow AS rsr
-        ON rsr.row_uid = drsr.row_uid
-    INNER JOIN dbo.dim_delphi_unit AS du
-        ON du.unit = LTRIM(RTRIM(rsr.unit))
-    WHERE fc.vehicle_id IS NULL
-      AND rsr.unit IS NOT NULL
-      AND LTRIM(RTRIM(rsr.unit)) <> N'';
+    IF OBJECT_ID('dbo.ReportSnapshotRow', 'U') IS NOT NULL
+    BEGIN
+        -- Fallback: Link report-based cases to units via report snapshot rows
+        INSERT INTO #src_bridge (case_id, unit_id)
+        SELECT DISTINCT
+            fc.case_id,
+            du.unit_id
+        FROM dbo.fact_case AS fc
+        INNER JOIN dbo.dim_report_snapshot_row AS drsr
+            ON drsr.report_snapshot_row_id = fc.report_snapshot_row_id
+        INNER JOIN dbo.ReportSnapshotRow AS rsr
+            ON rsr.row_uid = drsr.row_uid
+        INNER JOIN dbo.dim_delphi_unit AS du
+            ON du.unit = LTRIM(RTRIM(rsr.unit))
+        WHERE fc.vehicle_id IS NULL
+          AND rsr.unit IS NOT NULL
+          AND LTRIM(RTRIM(rsr.unit)) <> N'';
+    END;
 
     BEGIN TRY
         BEGIN TRAN;
