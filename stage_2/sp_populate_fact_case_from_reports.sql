@@ -88,14 +88,34 @@ BEGIN
         ON ds.status_name = LTRIM(RTRIM(rc.status_name))
     LEFT JOIN dbo.dim_system AS sys
         ON sys.system_name = COALESCE(NULLIF(LTRIM(RTRIM(rc.system_name)), N''), N'Engine')
-    LEFT JOIN dbo.RakeHistory AS rh
-        ON rh.Vehicle = LTRIM(RTRIM(CAST(rc.vehicle AS NVARCHAR(100))))
+    LEFT JOIN dbo.RakeHistory AS rh_vehicle
+        ON rh_vehicle.Vehicle = LTRIM(RTRIM(CAST(rc.vehicle AS NVARCHAR(100))))
+    LEFT JOIN (
+        SELECT
+            Unit,
+            MAX(TOC) AS TOC,
+            MAX(Vehicle_Class) AS Vehicle_Class,
+            MAX(R2_Depot) AS R2_Depot
+        FROM dbo.RakeHistory
+        WHERE Unit IS NOT NULL
+        GROUP BY Unit
+    ) AS rh_unit
+        ON rh_unit.Unit = LTRIM(RTRIM(rc.unit))
     LEFT JOIN dbo.dim_toc AS dt
-        ON dt.toc_name = LTRIM(RTRIM(rh.TOC))
+        ON dt.toc_name = COALESCE(
+            LTRIM(RTRIM(rh_vehicle.TOC)),
+            LTRIM(RTRIM(rh_unit.TOC))
+        )
     LEFT JOIN dbo.dim_class AS dc
-        ON dc.class_name = LTRIM(RTRIM(rh.Vehicle_Class))
+        ON dc.class_name = COALESCE(
+            LTRIM(RTRIM(rh_vehicle.Vehicle_Class)),
+            LTRIM(RTRIM(rh_unit.Vehicle_Class))
+        )
     LEFT JOIN dbo.dim_depot AS dd
-        ON dd.depot_name = LTRIM(RTRIM(rh.R2_Depot))
+        ON dd.depot_name = COALESCE(
+            LTRIM(RTRIM(rh_vehicle.R2_Depot)),
+            LTRIM(RTRIM(rh_unit.R2_Depot))
+        )
     LEFT JOIN dbo.dim_vehicle AS dv
         ON dv.vehicle = LTRIM(RTRIM(CAST(rc.vehicle AS NVARCHAR(100))))
     LEFT JOIN dbo.dim_report_snapshot_row AS drsr
