@@ -474,8 +474,14 @@ BEGIN
         snapshot_id INT NOT NULL,
         row_uid VARCHAR(64) NOT NULL,
         report_date DATETIME2 NOT NULL,
+        unit_id INT NULL,
+        vehicle_id INT NULL,
         CONSTRAINT FK_dim_report_snapshot_row_fact_report_snapshot
             FOREIGN KEY (snapshot_id) REFERENCES dbo.fact_report_snapshot(snapshot_id),
+        CONSTRAINT FK_dim_report_snapshot_row_dim_delphi_unit
+            FOREIGN KEY (unit_id) REFERENCES dbo.dim_delphi_unit(unit_id),
+        CONSTRAINT FK_dim_report_snapshot_row_dim_vehicle
+            FOREIGN KEY (vehicle_id) REFERENCES dbo.dim_vehicle(vehicle_id),
         CONSTRAINT UQ_dim_report_snapshot_row UNIQUE (snapshot_id, row_uid)
     );
 END;
@@ -500,6 +506,28 @@ IF NOT EXISTS (
 BEGIN
     CREATE NONCLUSTERED INDEX IX_dim_report_snapshot_row_row_uid
     ON dbo.dim_report_snapshot_row (row_uid);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_dim_report_snapshot_row_unit_id'
+      AND object_id = OBJECT_ID('dbo.dim_report_snapshot_row')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_dim_report_snapshot_row_unit_id
+    ON dbo.dim_report_snapshot_row (unit_id);
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_dim_report_snapshot_row_vehicle_id'
+      AND object_id = OBJECT_ID('dbo.dim_report_snapshot_row')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_dim_report_snapshot_row_vehicle_id
+    ON dbo.dim_report_snapshot_row (vehicle_id);
 END;
 
 
