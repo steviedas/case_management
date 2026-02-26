@@ -817,6 +817,33 @@ BEGIN
     ON dbo.bridge_case_alert (date_assigned);
 END;
 
+-- bridge_case_report_snapshot_row_id
+IF OBJECT_ID('dbo.bridge_case_report_snapshot_row_id', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.bridge_case_report_snapshot_row_id (
+        case_id INT NOT NULL,
+        report_snapshot_row_id INT NOT NULL,
+        CONSTRAINT PK_bridge_case_report_snapshot_row_id
+            PRIMARY KEY (case_id, report_snapshot_row_id),
+        CONSTRAINT FK_bridge_case_report_snapshot_row_id_fact_case
+            FOREIGN KEY (case_id) REFERENCES dbo.fact_case(case_id),
+        CONSTRAINT FK_bridge_case_report_snapshot_row_id_dim_report_snapshot_row
+            FOREIGN KEY (report_snapshot_row_id)
+            REFERENCES dbo.dim_report_snapshot_row(report_snapshot_row_id)
+    );
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = 'IX_bridge_case_report_snapshot_row_id_report_snapshot_row_id'
+      AND object_id = OBJECT_ID('dbo.bridge_case_report_snapshot_row_id')
+)
+BEGIN
+    CREATE NONCLUSTERED INDEX IX_bridge_case_report_snapshot_row_id_report_snapshot_row_id
+    ON dbo.bridge_case_report_snapshot_row_id (report_snapshot_row_id);
+END;
+
 
 -- bridge_case_delphi_unit
 IF OBJECT_ID('dbo.bridge_case_delphi_unit', 'U') IS NULL
