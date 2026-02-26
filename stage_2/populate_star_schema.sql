@@ -39,6 +39,9 @@ EXEC sp_populate_fact_case;
 -- Step 5b: Populate fact_case from reports (depends on dim_report_snapshot_row)
 EXEC sp_populate_fact_case_from_reports;
 
+-- Step 5c: Populate report-row bridge for report-driven case linking
+EXEC sp_populate_bridge_case_report_snapshot_row_id;
+
 -- Step 6: Populate fact_record (depends on fact_case, dim_record_type)
 EXEC sp_populate_fact_record;
 

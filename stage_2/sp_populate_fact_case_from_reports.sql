@@ -4,10 +4,12 @@ BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT ON;
 
-    IF OBJECT_ID('tempdb..#src_case') IS NOT NULL
-        DROP TABLE #src_case;
+    IF OBJECT_ID('tempdb..#report_case_input') IS NOT NULL
+        DROP TABLE #report_case_input;
+    IF OBJECT_ID('tempdb..#fact_case_upsert_source') IS NOT NULL
+        DROP TABLE #fact_case_upsert_source;
 
-    CREATE TABLE #src_case
+    CREATE TABLE #report_case_input
     (
         report_snapshot_row_id INT NOT NULL PRIMARY KEY,
         priority_id INT NULL,
@@ -30,17 +32,20 @@ BEGIN
         root_code_id INT NULL,
         row_hash AS CONVERT(VARBINARY(32),
             HASHBYTES('SHA2_256',
-                CAST(report_snapshot_row_id AS NVARCHAR(20)) + N'|' +
                 COALESCE(title, N'') + N'|' +
                 COALESCE(CAST(priority_id AS NVARCHAR(10)), N'') + N'|' +
                 COALESCE(CAST(status_id AS NVARCHAR(10)), N'') + N'|' +
                 COALESCE(CAST(system_id AS NVARCHAR(10)), N'') + N'|' +
-                COALESCE(CONVERT(NVARCHAR(30), created_at, 121), N'')
+                COALESCE(CONVERT(NVARCHAR(30), created_at, 121), N'') + N'|' +
+                COALESCE(CAST(toc_id AS NVARCHAR(10)), N'') + N'|' +
+                COALESCE(CAST(class_id AS NVARCHAR(10)), N'') + N'|' +
+                COALESCE(CAST(depot_id AS NVARCHAR(10)), N'') + N'|' +
+                COALESCE(CAST(vehicle_id AS NVARCHAR(10)), N'')
             )
         ) PERSISTED
     );
 
-    INSERT INTO #src_case (
+    INSERT INTO #report_case_input (
         report_snapshot_row_id,
         priority_id,
         status_id,
@@ -124,33 +129,115 @@ BEGIN
       AND LTRIM(RTRIM(rc._UID)) <> N''
       AND drsr.report_snapshot_row_id IS NOT NULL;
 
+    CREATE TABLE #fact_case_upsert_source
+    (
+        report_snapshot_row_id INT NOT NULL PRIMARY KEY,
+        existing_case_id INT NULL,
+        priority_id INT NULL,
+        status_id INT NULL,
+        rfs NVARCHAR(MAX) NULL,
+        title NVARCHAR(500) NULL,
+        description NVARCHAR(MAX) NULL,
+        system_id INT NULL,
+        linked_work_orders NVARCHAR(MAX) NULL,
+        created_at DATETIME2 NULL,
+        updated_at DATETIME2 NULL,
+        updated_by VARCHAR(100) NULL,
+        toc_id INT NULL,
+        class_id INT NULL,
+        depot_id INT NULL,
+        vehicle_id INT NULL,
+        delay_prevented FLOAT NULL,
+        labour_hours FLOAT NULL,
+        symptom_code_id INT NULL,
+        root_code_id INT NULL,
+        row_hash VARBINARY(32) NOT NULL
+    );
+
+    INSERT INTO #fact_case_upsert_source (
+        report_snapshot_row_id,
+        existing_case_id,
+        priority_id,
+        status_id,
+        rfs,
+        title,
+        description,
+        system_id,
+        linked_work_orders,
+        created_at,
+        updated_at,
+        updated_by,
+        toc_id,
+        class_id,
+        depot_id,
+        vehicle_id,
+        delay_prevented,
+        labour_hours,
+        symptom_code_id,
+        root_code_id,
+        row_hash
+    )
+    SELECT
+        src.report_snapshot_row_id,
+        b.case_id AS existing_case_id,
+        src.priority_id,
+        src.status_id,
+        src.rfs,
+        src.title,
+        src.description,
+        src.system_id,
+        src.linked_work_orders,
+        src.created_at,
+        src.updated_at,
+        src.updated_by,
+        src.toc_id,
+        src.class_id,
+        src.depot_id,
+        src.vehicle_id,
+        src.delay_prevented,
+        src.labour_hours,
+        src.symptom_code_id,
+        src.root_code_id,
+        src.row_hash
+    FROM #report_case_input AS src
+    LEFT JOIN (
+        SELECT
+            report_snapshot_row_id,
+            MIN(case_id) AS case_id
+        FROM dbo.bridge_case_report_snapshot_row_id
+        GROUP BY report_snapshot_row_id
+    ) AS b
+        ON b.report_snapshot_row_id = src.report_snapshot_row_id;
+
     BEGIN TRY
         BEGIN TRAN;
 
         ;WITH tgt_hashed AS
         (
             SELECT
-                fc.*,
+                fc.case_id,
                 CONVERT(VARBINARY(32),
                     HASHBYTES('SHA2_256',
-                        CAST(fc.report_snapshot_row_id AS NVARCHAR(20)) + N'|' +
                         COALESCE(fc.title, N'') + N'|' +
                         COALESCE(CAST(fc.priority_id AS NVARCHAR(10)), N'') + N'|' +
                         COALESCE(CAST(fc.status_id AS NVARCHAR(10)), N'') + N'|' +
                         COALESCE(CAST(fc.system_id AS NVARCHAR(10)), N'') + N'|' +
-                        COALESCE(CONVERT(NVARCHAR(30), fc.created_at, 121), N'')
+                        COALESCE(CONVERT(NVARCHAR(30), fc.created_at, 121), N'') + N'|' +
+                        COALESCE(CAST(fc.toc_id AS NVARCHAR(10)), N'') + N'|' +
+                        COALESCE(CAST(fc.class_id AS NVARCHAR(10)), N'') + N'|' +
+                        COALESCE(CAST(fc.depot_id AS NVARCHAR(10)), N'') + N'|' +
+                        COALESCE(CAST(fc.vehicle_id AS NVARCHAR(10)), N'')
                     )
                 ) AS row_hash
             FROM dbo.fact_case AS fc
-            WHERE fc.report_snapshot_row_id IS NOT NULL
         )
         MERGE dbo.fact_case AS tgt
-        USING #src_case AS src
-            ON tgt.report_snapshot_row_id = src.report_snapshot_row_id
+        USING #fact_case_upsert_source AS src
+            ON tgt.case_id = src.existing_case_id
 
         WHEN MATCHED
             AND (SELECT th.row_hash FROM tgt_hashed AS th
-                 WHERE th.report_snapshot_row_id = tgt.report_snapshot_row_id) <> src.row_hash
+                 WHERE th.case_id = tgt.case_id) <> src.row_hash
         THEN UPDATE SET
             tgt.priority_id = src.priority_id,
             tgt.status_id = src.status_id,
@@ -189,8 +276,7 @@ BEGIN
             delay_prevented,
             labour_hours,
             symptom_code_id,
-            root_code_id,
-            report_snapshot_row_id
+            root_code_id
         )
         VALUES (
             src.priority_id,
@@ -210,8 +296,7 @@ BEGIN
             src.delay_prevented,
             src.labour_hours,
             src.symptom_code_id,
-            src.root_code_id,
-            src.report_snapshot_row_id
+            src.root_code_id
         );
 
         COMMIT;
@@ -221,6 +306,8 @@ BEGIN
         THROW;
     END CATCH
 
-    IF OBJECT_ID('tempdb..#src_case') IS NOT NULL
-        DROP TABLE #src_case;
+    IF OBJECT_ID('tempdb..#report_case_input') IS NOT NULL
+        DROP TABLE #report_case_input;
+    IF OBJECT_ID('tempdb..#fact_case_upsert_source') IS NOT NULL
+        DROP TABLE #fact_case_upsert_source;
 END;
