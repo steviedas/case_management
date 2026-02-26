@@ -79,11 +79,15 @@ BEGIN
     FROM dbo.RCMCaseManagement AS rcm
 
     -- Map priority values and join to dim_priority to get priority_id
-    -- RCMCaseManagement has: NULL, 'High', 'Medium', 'Low'
+    -- RCMCaseManagement has: NULL, '0', '1', '2', '3' (legacy: 'High', 'Medium', 'Low')
     -- dim_priority has: 'Attend at next exam', 'Attend at next depot visit', 'As soon as possible'
     LEFT JOIN dbo.dim_priority AS p
         ON p.priority_name = CASE
             WHEN rcm.Priority IS NULL THEN NULL
+            WHEN LTRIM(RTRIM(rcm.Priority)) = '0' THEN 'As soon as possible'
+            WHEN LTRIM(RTRIM(rcm.Priority)) = '1' THEN 'Attend at next depot visit'
+            WHEN LTRIM(RTRIM(rcm.Priority)) = '2' THEN 'Attend at next exam'
+            WHEN LTRIM(RTRIM(rcm.Priority)) = '3' THEN 'Attend at next exam'
             WHEN LOWER(LTRIM(RTRIM(rcm.Priority))) = 'High' THEN 'As soon as possible'
             WHEN LOWER(LTRIM(RTRIM(rcm.Priority))) = 'Medium' THEN 'Attend at next depot visit'
             WHEN LOWER(LTRIM(RTRIM(rcm.Priority))) = 'Low' THEN 'Attend at next exam'
