@@ -34,8 +34,10 @@ BEGIN
             fc.case_id,
             du.unit_id
         FROM dbo.fact_case AS fc
+        INNER JOIN dbo.bridge_case_report_snapshot_row_id AS bcrsr
+            ON bcrsr.case_id = fc.case_id
         INNER JOIN dbo.dim_report_snapshot_row AS drsr
-            ON drsr.report_snapshot_row_id = fc.report_snapshot_row_id
+            ON drsr.report_snapshot_row_id = bcrsr.report_snapshot_row_id
         INNER JOIN dbo.ReportSnapshotRow AS rsr
             ON rsr.row_uid = drsr.row_uid
         INNER JOIN dbo.dim_delphi_unit AS du
