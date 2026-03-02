@@ -8,3 +8,4 @@ DROP TABLE Report;
 DROP TABLE ReportCase;
 DROP TABLE ReportSnapshot;
 DROP TABLE ReportSnapshotRow;
+DROP TABLE RCMCaseManagement;
