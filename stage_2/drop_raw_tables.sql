@@ -1,0 +1,10 @@
+DROP TABLE Alerts;
+DROP TABLE AlertTraceReference;
+DROP TABLE EngineIdlingEpisodes;
+DROP TABLE EngineIdlingMetrics;
+DROP TABLE fact_engine_idling_episode;
+DROP TABLE fact_engine_idling_metrics;
+DROP TABLE Report;
+DROP TABLE ReportCase;
+DROP TABLE ReportSnapshot;
+DROP TABLE ReportSnapshotRow;
