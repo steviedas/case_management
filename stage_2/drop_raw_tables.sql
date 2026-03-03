@@ -10,12 +10,6 @@ IF OBJECT_ID('dbo.EngineIdlingEpisodes', 'U') IS NOT NULL
 IF OBJECT_ID('dbo.EngineIdlingMetrics', 'U') IS NOT NULL
     DROP TABLE dbo.EngineIdlingMetrics;
 
-IF OBJECT_ID('dbo.fact_engine_idling_episode', 'U') IS NOT NULL
-    DROP TABLE dbo.fact_engine_idling_episode;
-
-IF OBJECT_ID('dbo.fact_engine_idling_metrics', 'U') IS NOT NULL
-    DROP TABLE dbo.fact_engine_idling_metrics;
-
 IF OBJECT_ID('dbo.Report', 'U') IS NOT NULL
     DROP TABLE dbo.Report;
 
