@@ -87,6 +87,39 @@ intervention_history AS (
     INNER JOIN dbo.fact_interventions AS fi
         ON fi.master_intervention_key = bci.master_intervention_key
     GROUP BY bci.case_id
+),
+report_history AS (
+    SELECT
+        bcr.case_id,
+        STRING_AGG(
+            CONVERT(NVARCHAR(MAX),
+                CONCAT(
+                    'row_id ',
+                    CAST(bcr.report_snapshot_row_id AS NVARCHAR(20)),
+                    ' | report_date ',
+                    COALESCE(CONVERT(NVARCHAR(10), drsr.report_date, 120), ''),
+                    ' | row_uid ',
+                    COALESCE(drsr.row_uid, ''),
+                    ' | snapshot ',
+                    COALESCE(frs.title, ''),
+                    CASE WHEN frs.start_time IS NOT NULL THEN CONCAT(' | start ', CONVERT(NVARCHAR(19), frs.start_time, 120)) ELSE '' END,
+                    CASE WHEN frs.end_time IS NOT NULL THEN CONCAT(' | end ', CONVERT(NVARCHAR(19), frs.end_time, 120)) ELSE '' END,
+                    ' | report ',
+                    COALESCE(fr.title, ''),
+                    CASE WHEN fr.report_frequency IS NOT NULL THEN CONCAT(' | freq ', fr.report_frequency) ELSE '' END,
+                    CASE WHEN fr.storage_path IS NOT NULL THEN CONCAT(' | path ', fr.storage_path) ELSE '' END
+                )
+            ),
+            @sep
+        ) WITHIN GROUP (ORDER BY drsr.report_date, bcr.report_snapshot_row_id) AS reports_attached
+    FROM dbo.bridge_case_report_snapshot_row_id AS bcr
+    LEFT JOIN dbo.dim_report_snapshot_row AS drsr
+        ON drsr.report_snapshot_row_id = bcr.report_snapshot_row_id
+    LEFT JOIN dbo.fact_report_snapshot AS frs
+        ON frs.snapshot_id = drsr.snapshot_id
+    LEFT JOIN dbo.fact_report AS fr
+        ON fr.report_id = frs.report_id
+    GROUP BY bcr.case_id
 )
 SELECT
     fc.case_id,
@@ -111,19 +144,10 @@ SELECT
     sc.code_long AS symptom_code_long,
     rc.code_short AS root_code_short,
     rc.code_long AS root_code_long,
-    fr.title AS report_title,
-    fr.description AS report_description,
-    fr.report_frequency,
-    fr.storage_path AS report_storage_path,
-    fr.partitioned_by AS report_partitioned_by,
-    frs.title AS report_snapshot_title,
-    frs.start_time AS report_snapshot_start_time,
-    frs.end_time AS report_snapshot_end_time,
-    drsr.report_date AS report_date,
-    drsr.row_uid AS report_row_uid,
     rh.record_history,
     ah.alerts_attached,
-    ih.interventions_attached
+    ih.interventions_attached,
+    rph.reports_attached
 FROM dbo.fact_case AS fc
 LEFT JOIN dbo.dim_priority AS dp
     ON dp.priority_id = fc.priority_id
@@ -147,16 +171,12 @@ LEFT JOIN dbo.dim_code AS sc
     ON sc.code_id = fc.symptom_code_id
 LEFT JOIN dbo.dim_code AS rc
     ON rc.code_id = fc.root_code_id
-LEFT JOIN dbo.dim_report_snapshot_row AS drsr
-    ON drsr.report_snapshot_row_id = fc.report_snapshot_row_id
-LEFT JOIN dbo.fact_report_snapshot AS frs
-    ON frs.snapshot_id = drsr.snapshot_id
-LEFT JOIN dbo.fact_report AS fr
-    ON fr.report_id = frs.report_id
 LEFT JOIN record_history AS rh
     ON rh.case_id = fc.case_id
 LEFT JOIN alert_history AS ah
     ON ah.case_id = fc.case_id
 LEFT JOIN intervention_history AS ih
     ON ih.case_id = fc.case_id
+LEFT JOIN report_history AS rph
+    ON rph.case_id = fc.case_id
 ORDER BY fc.case_id;
