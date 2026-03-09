@@ -1,8 +1,8 @@
-IF OBJECT_ID('dbo.fact_engine_idling_episode', 'U') IS NOT NULL
-    DROP TABLE dbo.fact_engine_idling_episode;
+-- IF OBJECT_ID('dbo.fact_engine_idling_episode', 'U') IS NOT NULL
+--     DROP TABLE dbo.fact_engine_idling_episode;
 
-IF OBJECT_ID('dbo.fact_engine_idling_metrics', 'U') IS NOT NULL
-    DROP TABLE dbo.fact_engine_idling_metrics;
+-- IF OBJECT_ID('dbo.fact_engine_idling_metrics', 'U') IS NOT NULL
+--     DROP TABLE dbo.fact_engine_idling_metrics;
 
 IF OBJECT_ID('dbo.bridge_case_delphi_unit', 'U') IS NOT NULL
     DROP TABLE dbo.bridge_case_delphi_unit;
