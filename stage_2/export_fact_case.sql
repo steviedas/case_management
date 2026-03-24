@@ -1,5 +1,3 @@
-DECLARE @sep NVARCHAR(1) = NCHAR(10);
-
 WITH unit_map AS (
     SELECT
         bcu.case_id,
@@ -26,7 +24,7 @@ record_history AS (
                     END
                 )
             ),
-            @sep
+            NCHAR(10)
         ) WITHIN GROUP (ORDER BY fr.created_at, fr.record_id) AS record_history
     FROM dbo.fact_record AS fr
     LEFT JOIN dbo.dim_record_type AS dr
@@ -52,7 +50,7 @@ alert_history AS (
                     CASE WHEN du.unit IS NOT NULL THEN CONCAT(' | unit ', du.unit) ELSE '' END
                 )
             ),
-            @sep
+            NCHAR(10)
         ) WITHIN GROUP (ORDER BY fa.alert_timestamp, fa.alert_id) AS alerts_attached
     FROM dbo.bridge_case_alert AS bca
     INNER JOIN dbo.fact_alert AS fa
@@ -81,7 +79,7 @@ intervention_history AS (
                     CASE WHEN fi.sum_total_delay_minutes IS NOT NULL THEN CONCAT(' | delay ', fi.sum_total_delay_minutes) ELSE '' END
                 )
             ),
-            @sep
+            NCHAR(10)
         ) WITHIN GROUP (ORDER BY fi.[date], fi.master_intervention_key) AS interventions_attached
     FROM dbo.bridge_case_intervention AS bci
     INNER JOIN dbo.fact_interventions AS fi
@@ -110,7 +108,7 @@ report_history AS (
                     CASE WHEN fr.storage_path IS NOT NULL THEN CONCAT(' | path ', fr.storage_path) ELSE '' END
                 )
             ),
-            @sep
+            NCHAR(10)
         ) WITHIN GROUP (ORDER BY drsr.report_date, bcr.report_snapshot_row_id) AS reports_attached
     FROM dbo.bridge_case_report_snapshot_row_id AS bcr
     LEFT JOIN dbo.dim_report_snapshot_row AS drsr
